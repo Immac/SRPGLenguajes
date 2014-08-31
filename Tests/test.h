@@ -11,13 +11,10 @@ public:
     static std::shared_ptr<Unit> newUnitByJob();
     static std::shared_ptr<Job> newJob();
     static std::shared_ptr<Stat> newStat(std::string name, std::string abbr, int defaultValue);
-    static std::shared_ptr<Panel> newPanel(int x, int y)
-    {
-        return std::move(std::shared_ptr<Panel>(new Panel{x, y}));
-    }
-    static bool instantiationTest();
+    static std::shared_ptr<Panel> newPanel(int x, int y);
     static std::shared_ptr<Board> newBoard();
-    static StatLists statsInPlay();
+    static bool instantiationTest();
+    static StatLists AtkDefHpInPlay();
 
 
 };

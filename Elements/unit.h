@@ -11,12 +11,10 @@ public:
         lvlUps(lvlUps),baseJob(baseJob),currentJob(currentJob)
         { recalculateStats(); }
 
-    std::shared_ptr<Job> getCurrentJob() const
-        { return currentJob; }
-    void setCurrentJob(const std::shared_ptr<Job> &value)
-        { currentJob = value; }
-
+    std::shared_ptr<Job> getCurrentJob() const { return currentJob; }
+    void setCurrentJob(const std::shared_ptr<Job> &value) { currentJob = value; }
     std::set<std::shared_ptr<Stat>>     stats;
+
 private:
     bool recalculateStats();
 

@@ -7,8 +7,8 @@
 class ActionAttack: public Action
 {
 public:
-    ActionAttack():
-    Action(std::string("Attack"),std::string("")){}
+    ActionAttack(std::string name,std::string formula = ""):
+        Action(name,formula){}
     bool perform(std::shared_ptr<Unit> &subject, std::shared_ptr<Unit> &object, StatLists statsInPlay) override;
 };
 
