@@ -3,19 +3,20 @@
 #include "utilities.h"
 struct StatLists
 {
-    std::set<std::string> effectEnhancers;
-    std::set<std::string> effectDetractors;
-    std::set<std::string> affectedStats;
+    set<string> effectEnhancers;
+    set<string> effectDetractors;
+    set<string> affectedStats;
 };
 class Action
 {
 public:
-    Action(std::string name,std::string formula = std::string("") ):
+    Action(string name,string formula = string("") ):
         actionName(name),actionFormula(formula){}
-    bool virtual perform(std::shared_ptr<Unit> &subject , std::shared_ptr<Unit> &object, StatLists statsInPlay);
+    bool virtual perform(shared_ptr<Unit> &subject , shared_ptr<Unit> &object, StatLists statsInPlay) = 0;
+    bool learned;
 private:
-    std::string actionName;
-    std::string actionFormula;
+    string actionName;
+    string actionFormula;
 };
 
 #endif // ACTION_H

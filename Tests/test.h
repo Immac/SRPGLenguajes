@@ -7,7 +7,6 @@ class Test
 {
 public:
     Test() = default;
-    static std::shared_ptr<Unit> newUnitByStats();
     static std::shared_ptr<Unit> newUnitByJob();
     static std::shared_ptr<Job> newJob();
     static std::shared_ptr<Stat> newStat(std::string name, std::string abbr, int defaultValue);

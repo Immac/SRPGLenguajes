@@ -6,9 +6,7 @@ class Maker
 {
 public:
     Maker();
-    std::shared_ptr<Board> makeUnit(){}
-
-
+    //shared_ptr<Board> makeUnit(){}
 };
 
 #endif // MAKER_H

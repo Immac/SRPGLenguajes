@@ -4,17 +4,17 @@
 class Board
 {
 public:
-    Board(std::vector<std::shared_ptr<Panel>> mapPanels):
+    Board(vector<shared_ptr<Panel>> mapPanels):
         panels(mapPanels)
         {linkPanels();}
-    bool addPanel(std::shared_ptr<Panel> panel);
-    std::shared_ptr<Panel> selectPanelOnCoordinate(Point point);
-    std::vector<std::shared_ptr<Panel>> selectedPanelUnitMoveRange();
+    bool addPanel(shared_ptr<Panel> panel);
+    shared_ptr<Panel> selectPanelOnCoordinate(Point point);
+    vector<shared_ptr<Panel>> selectedPanelUnitMoveRange();
+    shared_ptr<Panel> getPanel() const;
 
 private:
-    std::vector<std::shared_ptr<Panel>> panels;
-    std::shared_ptr<Panel> panel;
-    /** Debug **/
+    vector<shared_ptr<Panel>> panels;
+    shared_ptr<Panel> panel;
     void linkPanels();
 };
 

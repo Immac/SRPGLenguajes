@@ -1,15 +1,24 @@
 #include "board.h"
-bool Board::addPanel(std::shared_ptr<Panel> panel)
+bool Board::addPanel(shared_ptr<Panel> panel)
 {
     panels.push_back(panel);
     return true;
 }
 
-std::shared_ptr<Panel> Board::selectPanelOnCoordinate(Point point)
+shared_ptr<Panel> Board::selectPanelOnCoordinate(Point point)
 {
-    panel = (*std::find_if(panels.begin(),panels.end(),IsPanelPosition(point) ) );
+    panel = (*find_if(panels.begin(),panels.end(),IsPanelPosition(point) ) );
     return panel;
 }
+shared_ptr<Panel> Board::getPanel() const
+{
+    return panel;
+}
+
+
+
+
+
 
 void Board::linkPanels()
 {

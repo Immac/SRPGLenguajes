@@ -9,7 +9,7 @@ int main()
 //    auto panel1 = Test::newPanel(0,0);
 //    auto panel2 = Test::newPanel(0,1);
 //    auto myUnit = Test::newUnitByJob();
-//    auto yourUnit = Test::newUnitByJob();
+   auto yourUnit = Test::newUnitByJob();
 //    attackAction.perform(myUnit,yourUnit,Test::AtkDefHpInPlay());
 //    if(panel1->recieveUnit(std::move(myUnit)))
 //        std::cout << "Panel 1 recieved";

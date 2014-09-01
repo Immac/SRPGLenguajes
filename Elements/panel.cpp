@@ -2,7 +2,7 @@
 
 
 
-bool Panel::giveMyUnitTo(std::shared_ptr<Panel> newOwner)
+bool Panel::giveMyUnitTo(shared_ptr<Panel> newOwner)
 {
     if(newOwner->recieveUnit(myUnit))
     {
@@ -12,11 +12,11 @@ bool Panel::giveMyUnitTo(std::shared_ptr<Panel> newOwner)
     return false;
 }
 
-bool Panel::recieveUnit(std::shared_ptr<Unit> newUnit)
+bool Panel::recieveUnit(shared_ptr<Unit> newUnit)
 {
     if(myUnit)
         return false;
-    myUnit = std::move(newUnit);
+    myUnit = move(newUnit);
     return true;
 }
 
@@ -28,16 +28,16 @@ Point Panel::getPointByOffset(Point offsetPoint)
 }
 
 void Panel::fillAdjacentPanelByPosition(Point offsetPoint,
-                                       std::shared_ptr<Panel> &output,
-                                       std::vector<std::shared_ptr<Panel> > &input)
+                                       shared_ptr<Panel> &output,
+                                       vector<shared_ptr<Panel> > &input)
 {
-        auto iter = std::find_if(input.begin(),
+        auto iter = find_if(input.begin(),
                                  input.end(),
                                  IsPanelPosition(getPointByOffset(offsetPoint)) );
         if(iter != input.end())
             output = *iter;
 }
-void Panel::fillAdjacentPanels(std::vector<std::shared_ptr<Panel> > &mapPanels)
+void Panel::fillAdjacentPanels(vector<shared_ptr<Panel> > &mapPanels)
 {
     fillAdjacentPanelByPosition(northOffset, northPanel ,mapPanels);
     fillAdjacentPanelByPosition(soutOffset, southPanel ,mapPanels);

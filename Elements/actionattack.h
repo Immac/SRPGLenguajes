@@ -7,9 +7,9 @@
 class ActionAttack: public Action
 {
 public:
-    ActionAttack(std::string name,std::string formula = ""):
+    ActionAttack(string name,string formula = ""):
         Action(name,formula){}
-    bool perform(std::shared_ptr<Unit> &subject, std::shared_ptr<Unit> &object, StatLists statsInPlay) override;
+    bool perform(shared_ptr<Unit> &subject, shared_ptr<Unit> &object, StatLists statsInPlay) override;
 };
 
 #endif // ACTIONATTACK_H

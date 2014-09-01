@@ -15,7 +15,9 @@ SOURCES += \
     Makers/maker.cpp \
     Elements/job.cpp \
     Elements/action.cpp \
-    Elements/actionattack.cpp
+    Elements/actionattack.cpp \
+    Elements/skillset.cpp \
+    Elements/levelups.cpp
 
 HEADERS += \
     Elements/panel.h \
@@ -27,5 +29,7 @@ HEADERS += \
     Makers/maker.h \
     Elements/job.h \
     Elements/action.h \
-    Elements/actionattack.h
+    Elements/actionattack.h \
+    Elements/skillset.h \
+    Elements/levelups.h
 

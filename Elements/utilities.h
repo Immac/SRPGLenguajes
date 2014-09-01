@@ -7,18 +7,20 @@
 #include <set>
 #include <map>
 #include <algorithm>
+
+using namespace std;
 namespace
 {
-    std::string kHpName = "Health";
-    std::string kHpAbbr = "HP";
-    std::string kAtkName = "Attack";
-    std::string kAtkAbbr = "ATK";
-    std::string kDefName = "Defense";
-    std::string kDefAbbr = "DEF";
-    std::string kMovName = "Move";
-    std::string kMovAbbr = "Mov";
-    std::string kJmpName = "Jump";
-    std::string kJmpAbbr = "JMP";
+    string kHpName = "Health";
+    string kHpAbbr = "HP";
+    string kAtkName = "Attack";
+    string kAtkAbbr = "ATK";
+    string kDefName = "Defense";
+    string kDefAbbr = "DEF";
+    string kMovName = "Move";
+    string kMovAbbr = "Mov";
+    string kJmpName = "Jump";
+    string kJmpAbbr = "JMP";
 }
 
 class Unit;
@@ -27,12 +29,12 @@ class Panel;
 class Board;
 class Job;
 /*
-typedef std::shared_ptr<Unit> UnitPtr;
-typedef std::shared_ptr<Stat> StatPtr;
-typedef std::shared_ptr<Panel> PanelPtr;
-typedef std::shared_ptr<Board> BoardPtr;
+typedef shared_ptr<Unit> UnitPtr;
+typedef shared_ptr<Stat> StatPtr;
+typedef shared_ptr<Panel> PanelPtr;
+typedef shared_ptr<Board> BoardPtr;
 */
-typedef std::pair<int,int> Point;
+typedef pair<int,int> Point;
 
 class Utilities
 {

@@ -1,24 +1,18 @@
 #include "test.h"
 
 
-std::shared_ptr<Unit> Test::newUnitByStats()
-{
-    auto newStats
-    {
-        newStat(kHpName,kHpAbbr,100),
-        newStat(kAtkName,kAtkAbbr,75),
-        newStat(kDefName,kDefAbbr,80),
-        newStat(kMovName,kMovAbbr,4),
-        newStat(kJmpName,kJmpAbbr,3),
-    };
-    return std::move(std::shared_ptr<Unit>(new Unit(std::move(newStats))));;
-}
+
 
 std::shared_ptr<Unit> Test::newUnitByJob()
 {
+    SkillSet skillSet(string("MySkillSet"));
+    StatSystem statSystem;
     auto job = newJob();
     std::map<std::shared_ptr<Job>,int> jobList{{job,1}};
-    std::shared_ptr<Unit> unit(new Unit(jobList,job,job));
+    statSystem.levelUps = jobList;
+    statSystem.currentJob = job;
+    statSystem.baseJob = job;
+    std::shared_ptr<Unit> unit(new Unit(statSystem,skillSet));
     return std::move(unit);
 }
 
@@ -88,6 +82,7 @@ std::shared_ptr<Board> Test::newBoard()
         }
     }
     std::shared_ptr<Board> output {new Board(std::move(panels))};
+
 
     return output;
 }

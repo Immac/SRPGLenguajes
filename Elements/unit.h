@@ -1,28 +1,27 @@
 #ifndef UNIT_H
 #define UNIT_H
-#include "stat.h"
-#include "job.h"
+#include "levelups.h"
+#include "skillset.h"
+
 class Unit
 {
 public:
-    Unit(std::set<std::shared_ptr<Stat>> stats):
-        stats(stats){}
-    Unit(std::map<std::shared_ptr<Job>,int> lvlUps,std::shared_ptr<Job> baseJob,std::shared_ptr<Job> currentJob):
-        lvlUps(lvlUps),baseJob(baseJob),currentJob(currentJob)
-        { recalculateStats(); }
+    Unit(StatSystem statSystem,SkillSet skillSet):
+        mySkillSet(skillSet),
+        myStatSystem(statSystem)
+        {}
+    Unit(const Unit &other):
+        mySkillSet(other.mySkillSet),
+        myStatSystem(other.myStatSystem)
+        {}
+    Unit(Unit &&other):
+        mySkillSet(move(other.mySkillSet)),
+        myStatSystem(move(other.myStatSystem))
+        {}
 
-    std::shared_ptr<Job> getCurrentJob() const { return currentJob; }
-    void setCurrentJob(const std::shared_ptr<Job> &value) { currentJob = value; }
-    std::set<std::shared_ptr<Stat>>     stats;
+    SkillSet mySkillSet;
+    StatSystem myStatSystem;
 
-private:
-    bool recalculateStats();
-
-    std::map<std::shared_ptr<Job>,int>  lvlUps;
-    std::shared_ptr<Job>                baseJob;
-    std::shared_ptr<Job>                currentJob;
-
-    bool growStats(std::shared_ptr<Job> job, int multiplier);
 };
 
 #endif // UNIT_H
