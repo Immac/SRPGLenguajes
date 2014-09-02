@@ -7,24 +7,13 @@ bool Board::addPanel(shared_ptr<Panel> panel)
 
 shared_ptr<Panel> Board::selectPanelOnCoordinate(Point point)
 {
-    panel = (*find_if(panels.begin(),panels.end(),IsPanelPosition(point) ) );
-    return panel;
+    selectedPanel = (*find_if(panels.begin(),panels.end(),IsPanelPosition(point) ) );
+    return selectedPanel;
 }
-shared_ptr<Panel> Board::getPanel() const
-{
-    return panel;
-}
-
-
-
-
-
 
 void Board::linkPanels()
 {
-    for(auto &singlePanel:panels)
-    {
+    for(auto &singlePanel : panels)
         singlePanel->fillAdjacentPanels(panels);
-    }
 }
 

@@ -12,5 +12,3 @@ set<shared_ptr<Stat> > Job::getJobStats() const
 {
     return jobStats;
 }
-
-

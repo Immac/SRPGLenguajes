@@ -1,19 +1,22 @@
 #include "test.h"
-
-
-
-
-std::shared_ptr<Unit> Test::newUnitByJob()
+std::shared_ptr<Unit> Test::newUnit()
 {
-    SkillSet skillSet(string("MySkillSet"));
-    StatSystem statSystem;
+    const int level(10);
+    const int unitId(1);
+    const string skillSetName("MySkillSet");
+    SkillSet skillSet(skillSetName);
+    StatSystem statSystem(unitId);
     auto job = newJob();
-    std::map<std::shared_ptr<Job>,int> jobList{{job,1}};
+    std::map<std::shared_ptr<Job>,int> jobList
+    {
+        {job,level}
+    };
     statSystem.levelUps = jobList;
     statSystem.currentJob = job;
     statSystem.baseJob = job;
-    std::shared_ptr<Unit> unit(new Unit(statSystem,skillSet));
-    return std::move(unit);
+    string unitName = "Testo";
+    std::shared_ptr<Unit> unit(new Unit(unitName,statSystem,skillSet));
+    return unit;
 }
 
 std::shared_ptr<Job> Test::newJob()
@@ -33,9 +36,9 @@ std::shared_ptr<Job> Test::newJob()
     auto newJobStats
     {
         std::shared_ptr<Stat>(std::move(new Stat(kMovName,kMovAbbr,4))),
-        std::shared_ptr<Stat>(std::move(new Stat(kJmpName,kJmpAbbr,2))),
+        std::shared_ptr<Stat>(std::move(new Stat(kJmpName,kJmpAbbr,3))),
     };
-    auto myJob = new Job(newBaseStats,newGrowthStats,newJobStats);
+    auto myJob = new Job(string("Tester"),newBaseStats,newGrowthStats,newJobStats);
     return std::move(std::shared_ptr<Job>(std::move(myJob)));
 }
 
@@ -82,7 +85,8 @@ std::shared_ptr<Board> Test::newBoard()
         }
     }
     std::shared_ptr<Board> output {new Board(std::move(panels))};
-
-
+    shared_ptr<Panel> localSelectPanelOnCoordinate = output->selectPanelOnCoordinate(Point(0,0));
+    auto myUnit = Test::newUnit();
+    localSelectPanelOnCoordinate->recieveUnit(std::move(myUnit));
     return output;
 }

@@ -6,7 +6,8 @@
 class Unit
 {
 public:
-    Unit(StatSystem statSystem,SkillSet skillSet):
+    Unit(string unitName,StatSystem statSystem,SkillSet skillSet):
+        myName(unitName),
         mySkillSet(skillSet),
         myStatSystem(statSystem)
         {}
@@ -18,7 +19,7 @@ public:
         mySkillSet(move(other.mySkillSet)),
         myStatSystem(move(other.myStatSystem))
         {}
-
+    string myName;
     SkillSet mySkillSet;
     StatSystem myStatSystem;
 

@@ -13,7 +13,7 @@ public:
     Action(string name,string formula = string("") ):
         actionName(name),actionFormula(formula){}
     bool virtual perform(shared_ptr<Unit> &subject , shared_ptr<Unit> &object, StatLists statsInPlay) = 0;
-    bool learned;
+    bool learned = false;
 private:
     string actionName;
     string actionFormula;

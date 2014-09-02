@@ -12,12 +12,15 @@ SOURCES += \
     Elements/board.cpp \
     Elements/stat.cpp \
     Tests/test.cpp \
-    Makers/maker.cpp \
     Elements/job.cpp \
     Elements/action.cpp \
     Elements/actionattack.cpp \
     Elements/skillset.cpp \
-    Elements/levelups.cpp
+    Elements/levelups.cpp \
+    Loaders/boardloader.cpp \
+    Game/game.cpp \
+    Game/player.cpp \
+    Elements/unitset.cpp
 
 HEADERS += \
     Elements/panel.h \
@@ -26,10 +29,13 @@ HEADERS += \
     Elements/board.h \
     Elements/stat.h \
     Tests/test.h \
-    Makers/maker.h \
     Elements/job.h \
     Elements/action.h \
     Elements/actionattack.h \
     Elements/skillset.h \
-    Elements/levelups.h
+    Elements/levelups.h \
+    Loaders/boardloader.h \
+    Game/game.h \
+    Game/player.h \
+    Elements/unitset.h
 

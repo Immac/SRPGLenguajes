@@ -11,16 +11,16 @@
 using namespace std;
 namespace
 {
-    string kHpName = "Health";
-    string kHpAbbr = "HP";
-    string kAtkName = "Attack";
-    string kAtkAbbr = "ATK";
-    string kDefName = "Defense";
-    string kDefAbbr = "DEF";
-    string kMovName = "Move";
-    string kMovAbbr = "Mov";
-    string kJmpName = "Jump";
-    string kJmpAbbr = "JMP";
+    const string kHpName = "Health";
+    const string kHpAbbr = "HP";
+    const string kAtkName = "Attack";
+    const string kAtkAbbr = "ATK";
+    const string kDefName = "Defense";
+    const string kDefAbbr = "DEF";
+    const string kMovName = "Move";
+    const string kMovAbbr = "Mov";
+    const string kJmpName = "Jump";
+    const string kJmpAbbr = "JMP";
 }
 
 class Unit;

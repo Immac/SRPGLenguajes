@@ -4,13 +4,14 @@
 int main()
 {
 
-    Test::newBoard();
-//    auto attackAction = ActionAttack(std::string("Attack"));
+    std::shared_ptr<Board> localNewBoard = Test::newBoard();
+    auto attackAction = ActionAttack(std::string("Attack"));
 //    auto panel1 = Test::newPanel(0,0);
 //    auto panel2 = Test::newPanel(0,1);
-//    auto myUnit = Test::newUnitByJob();
-   auto yourUnit = Test::newUnitByJob();
-//    attackAction.perform(myUnit,yourUnit,Test::AtkDefHpInPlay());
+    auto myUnit = Test::newUnit();
+    auto yourUnit = Test::newUnit();
+    for(int i = 0 ; i < 8 ; i++)
+        attackAction.perform(myUnit,yourUnit,Test::AtkDefHpInPlay());
 //    if(panel1->recieveUnit(std::move(myUnit)))
 //        std::cout << "Panel 1 recieved";
 //    if(panel1->giveMyUnitTo(panel2))
