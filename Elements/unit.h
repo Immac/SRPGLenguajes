@@ -1,6 +1,6 @@
 #ifndef UNIT_H
 #define UNIT_H
-#include "levelups.h"
+#include "statsystem.h"
 #include "skillset.h"
 
 class Unit

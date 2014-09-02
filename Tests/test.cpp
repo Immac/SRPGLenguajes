@@ -1,12 +1,31 @@
 #include "test.h"
+int Test::randomInt(int minLevel, int maxLevel)
+{
+    typedef chrono::high_resolution_clock myClock;
+    auto beginning = myClock::now();
+    auto duration = myClock::now() - beginning;
+    unsigned seed = duration.count();
+    mt19937 random (seed);
+    uniform_int_distribution<int> distribution(minLevel,maxLevel);
+
+    const int level(distribution(random));
+
+    return level;
+}
+
 shared_ptr<Unit> Test::newUnit()
 {
-    const int level(10);
-    const int unitId(1);
+    int minLevel = 9;
+    int maxLevel = 12;
+
+    const int level = randomInt( minLevel,maxLevel);
+    const int unitId(randomInt(minLevel, 100000));
     const string skillSetName("MySkillSet");
+
     SkillSet skillSet(skillSetName);
     StatSystem statSystem(unitId);
     auto job = newJob();
+
     map<shared_ptr<Job>,int> jobList
     {
         {job,level}
@@ -16,6 +35,7 @@ shared_ptr<Unit> Test::newUnit()
     statSystem.baseJob = job;
     string unitName = "Testo";
     shared_ptr<Unit> unit(new Unit(unitName,statSystem,skillSet));
+
     return unit;
 }
 
@@ -73,6 +93,8 @@ StatLists Test::AtkDefHpInPlay()
     output.affectedStats = {"Health"};
     return output;
 }
+
+
 
 shared_ptr<Board> Test::newBoard()
 {

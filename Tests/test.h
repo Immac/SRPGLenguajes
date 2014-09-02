@@ -7,7 +7,7 @@
 class Test
 {
 public:
-    Test(){}
+    Test();
     static std::shared_ptr<Unit> newUnit();
     static std::shared_ptr<Job> newJob();
     static std::shared_ptr<Stat> newStat(std::string name, std::string abbr, int defaultValue);
@@ -15,7 +15,8 @@ public:
     static std::shared_ptr<Board> newBoard();
     static bool instantiationTest();
     static StatLists AtkDefHpInPlay();
-
+    static int randomInt(int minLevel, int maxLevel);
+private:
 };
 
 #endif // TEST_H

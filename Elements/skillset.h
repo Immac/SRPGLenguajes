@@ -4,14 +4,19 @@
 #include "action.h"
 class SkillSet
 {
+private:
+    typedef shared_ptr<Action> ActionPtr;
+    typedef shared_ptr<SkillSet> SkillSetPtr;
 public:
-    SkillSet(string name = string("Unnamed?")):name(name){}
-    set<shared_ptr<Action>> Actions;
-    set<shared_ptr<SkillSet>> SkillSubset;
-    string const getName() {return name;}
+    SkillSet(string skillSetName = string("Unnamed?")):
+        myName(skillSetName)
+        {}
+    set<ActionPtr> Actions;
+    set<SkillSetPtr> SkillSubset;
+    string const getName() {return myName;}
 
 private:
-    string name;
+    string myName;
 };
 
 #endif // SKILLSET_H

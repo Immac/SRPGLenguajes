@@ -6,7 +6,7 @@ int Stat::getDefaultValue() const
 }
 bool Stat::operator ==(const Stat &other) const
 {
-    return other.getName() == name;
+    return other.getName() == myName;
 }
 string Stat::getShortName() const
 {
@@ -14,5 +14,5 @@ string Stat::getShortName() const
 }
 string Stat::getName() const
 {
-    return name;
+    return myName;
 }

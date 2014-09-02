@@ -5,9 +5,8 @@
 class Stat
 {
 public:
-    typedef shared_ptr<Stat> StatPtr;
-    Stat(string name,string abbr,int defaultValue):
-        name(name),shortName(abbr),
+    Stat(string statName,string abbr,int defaultValue):
+        myName(statName),shortName(abbr),
         defaultValue(defaultValue),
         currentValue(defaultValue)
         {}
@@ -19,7 +18,7 @@ public:
     string getShortName() const;
 
 private:
-    string name;
+    string myName;
     string shortName;
     int defaultValue;
 
@@ -32,13 +31,13 @@ class IsStatNamed
 {
 public:
     IsStatNamed(string name = ""):
-        name(name){}
+        myName(name){}
     bool operator ()(shared_ptr<Stat> atkStat)
     {
-        return atkStat->getName() == name;
+        return atkStat->getName() == myName;
     }
 private:
-    string name;
+    string myName;
 };
 
 #endif // STAT_H
