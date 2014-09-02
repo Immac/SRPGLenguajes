@@ -3,11 +3,17 @@ Player::Player()
 {
 }
 
-void Player::addUnit(Unit &unit)
+void Player::addUnit(shared_ptr<Unit> &unit)
 {
     myUnits.insert(unit);
 }
 
-void Player::removeUnit(Unit &unit)
+void Player::removeUnit(shared_ptr<Unit> &unit)
 {
+    auto hasSameName = [&](shared_ptr<Unit> unitPtr)
+    {
+        return unit->myName == unitPtr->myName;
+    };
+    auto unitItr = find_if(myUnits.begin(),myUnits.end(),hasSameName);
+    myUnits.erase(unitItr);
 }

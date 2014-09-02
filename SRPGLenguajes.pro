@@ -20,7 +20,8 @@ SOURCES += \
     Loaders/boardloader.cpp \
     Game/game.cpp \
     Game/player.cpp \
-    Elements/unitset.cpp
+    Elements/unitset.cpp \
+    Game/allegiance.cpp
 
 HEADERS += \
     Elements/panel.h \
@@ -37,5 +38,8 @@ HEADERS += \
     Loaders/boardloader.h \
     Game/game.h \
     Game/player.h \
-    Elements/unitset.h
+    Elements/unitset.h \
+    Game/allegiance.h \
+    Expression/exprtk.hpp \
+    Tests/catch.hpp
 

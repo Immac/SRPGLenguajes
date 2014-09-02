@@ -2,6 +2,7 @@
 bool Board::addPanel(shared_ptr<Panel> panel)
 {
     panels.push_back(panel);
+    linkPanels();
     return true;
 }
 

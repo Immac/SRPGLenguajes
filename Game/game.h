@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 #include "Elements/board.h"
-
-class Game
+#include "allegiance.h"
+class Game: public Allegiance
 {
 public:
     Game();

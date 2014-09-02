@@ -11,18 +11,19 @@ public:
         mySkillSet(skillSet),
         myStatSystem(statSystem)
         {}
-    Unit(const Unit &other):
+    Unit(const Unit &other) noexcept :
+        myName(other.myName),
         mySkillSet(other.mySkillSet),
         myStatSystem(other.myStatSystem)
         {}
-    Unit(Unit &&other):
+    Unit(Unit &&other) noexcept :
+        myName(move(other.myName)),
         mySkillSet(move(other.mySkillSet)),
         myStatSystem(move(other.myStatSystem))
         {}
     string myName;
     SkillSet mySkillSet;
     StatSystem myStatSystem;
-
 };
 
 #endif // UNIT_H

@@ -6,9 +6,9 @@ class Player
 {
 public:
     Player();
-    void addUnit(Unit &unit);
-    void removeUnit(Unit &unit);
-    set<Unit> myUnits;
+    void addUnit(shared_ptr<Unit> &unit);
+    void removeUnit(shared_ptr<Unit> &unit);
+    set<shared_ptr<Unit>> myUnits;
     int currency;
     //set<Currency> currency;
     //set<Items> myItems;

@@ -2,11 +2,12 @@
 #define TEST_H
 #include "Elements/board.h"
 #include "Elements/action.h"
-
+#include <random>
+#include <chrono>
 class Test
 {
 public:
-    Test() = default;
+    Test(){}
     static std::shared_ptr<Unit> newUnit();
     static std::shared_ptr<Job> newJob();
     static std::shared_ptr<Stat> newStat(std::string name, std::string abbr, int defaultValue);
@@ -14,7 +15,6 @@ public:
     static std::shared_ptr<Board> newBoard();
     static bool instantiationTest();
     static StatLists AtkDefHpInPlay();
-
 
 };
 

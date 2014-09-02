@@ -15,8 +15,8 @@ bool StatSystem::growStats(shared_ptr<Job> job, int multiplier)
     set<shared_ptr<Stat> > statSet = job->getGrowthStats();
     for(shared_ptr<Stat> stat:statSet)
     {
-        auto deferenceAndCompareStat = [&] (shared_ptr<Stat> statPtr) { return *statPtr == *stat; };
-        auto statItr = find_if(calculatedStats.begin(),calculatedStats.end(),deferenceAndCompareStat);
+        auto isStatSame = [&] (shared_ptr<Stat> statPtr) { return *statPtr == *stat; };
+        auto statItr = find_if(calculatedStats.begin(),calculatedStats.end(),isStatSame);
         if(statItr == calculatedStats.end())
         {
             auto statBase = job->getBaseStats();
