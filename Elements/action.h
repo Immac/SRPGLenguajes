@@ -9,11 +9,17 @@ struct StatLists
 };
 class Action
 {
+protected:
+    typedef shared_ptr<Unit> UnitPtr ;
 public:
     Action(string name,string formula = string("") ):
-        actionName(name),actionFormula(formula){}
-    bool virtual perform(shared_ptr<Unit> &subject , shared_ptr<Unit> &object, StatLists statsInPlay) = 0;
-    bool learned = false;
+        actionName(name),
+        actionFormula(formula)
+        {}
+    bool virtual perform(UnitPtr &subject ,
+                         UnitPtr &object,
+                         StatLists statsInPlay) = 0;
+    string virtual getActionName() const;
 private:
     string actionName;
     string actionFormula;

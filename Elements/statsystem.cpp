@@ -1,32 +1,55 @@
 #include "statsystem.h"
 
+StatSystem::StatPtr StatSystem::getUnitProperty(string name)
+{
+
+    auto statItr = find_if(unitProperties.begin(),
+                           unitProperties.end(),
+                           IsStatNamed(name));
+    if(statItr == unitProperties.end())
+        return shared_ptr<Stat> (new Stat(statNotFound));
+
+    shared_ptr<Stat> stat = (*statItr);
+    return stat;
+}
+
+set<StatSystem::StatPtr> StatSystem::jobStats()
+{
+    return currentJob->getJobStats();
+}
+
 bool StatSystem::recalculateStats()
 {
     calculatedStats.clear();
-    for(shared_ptr<Stat> statItr : baseJob->getBaseStats())
-        calculatedStats.insert(shared_ptr<Stat>(new Stat(*statItr)));
-    for(pair<shared_ptr<Job>,int> const &var:levelUps)
+    for(StatPtr statItr : baseJob->getBaseStats())
+        calculatedStats.insert(StatPtr(new Stat(*statItr)));
+    for(pair<JobPtr,int> const &var:levelUps)
         growStats(var.first, var.second);
     return true;
 }
 
-bool StatSystem::growStats(shared_ptr<Job> job, int multiplier)
+bool StatSystem::growStats(JobPtr job, int multiplier)
 {
-    set<shared_ptr<Stat> > statSet = job->getGrowthStats();
-    for(shared_ptr<Stat> stat:statSet)
+    set<StatPtr> statSet = job->getGrowthStats();
+    for(StatPtr stat:statSet)
     {
-        auto isStatSame = [&] (shared_ptr<Stat> statPtr) { return *statPtr == *stat; };
-        auto statItr = find_if(calculatedStats.begin(),calculatedStats.end(),isStatSame);
+        auto isStatSame = [&] (StatPtr statPtr)
+            {
+                return *statPtr == *stat;
+            };
+        auto statItr = find_if(calculatedStats.begin(),
+                               calculatedStats.end(),
+                               isStatSame);
         if(statItr == calculatedStats.end())
         {
             auto statBase = job->getBaseStats();
             auto baseIter = statBase.find(stat);
-            shared_ptr<Stat> foundBase = *baseIter;
+            StatPtr foundBase = *baseIter;
             calculatedStats.insert(foundBase);
             statItr = calculatedStats.find(stat);//Review this> Unnecesary find?
         }
-        shared_ptr<Stat> foundStat = *statItr;
-        int growth = stat->getDefaultValue();
+        StatPtr foundStat = *statItr;
+        int growth = stat->getDefaultNumber();
         foundStat->grow(growth * multiplier);
     }
     return true;

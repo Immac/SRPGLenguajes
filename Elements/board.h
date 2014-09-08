@@ -1,20 +1,26 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include "panel.h"
+#include "unitset.h"
 class Board
 {
+private:
+    typedef shared_ptr<Panel> PanelPtr;
+    typedef shared_ptr<Unit> UnitPtr;
 public:
-    Board(vector<shared_ptr<Panel>> mapPanels):
+    Board(vector<PanelPtr> mapPanels):
         panels(mapPanels)
         {linkPanels();}
-    bool addPanel(shared_ptr<Panel> panel);
-    shared_ptr<Panel> selectPanelOnCoordinate(Point point);
-    vector<shared_ptr<Panel>> selectedPanelUnitMoveRange();
-    shared_ptr<Panel> const getSelectedPanel() { return selectedPanel; }
+    bool addPanel(PanelPtr panel);
+    bool giveUnitToPanel(UnitPtr &unit,PanelPtr &panel);
+    PanelPtr selectPanelOnCoordinate(Point point);
+    vector<PanelPtr> selectedPanelUnitMoveRange();
+    PanelPtr const getSelectedPanel() { return selectedPanel; }
+    UnitSet unitsInMap;
 
 private:
-    vector<shared_ptr<Panel>> panels;
-    shared_ptr<Panel> selectedPanel;
+    vector<PanelPtr> panels;
+    PanelPtr selectedPanel;
     void linkPanels();
 };
 

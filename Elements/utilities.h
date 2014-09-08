@@ -18,9 +18,11 @@ namespace
     const string kDefName = "Defense";
     const string kDefAbbr = "DEF";
     const string kMovName = "Move";
-    const string kMovAbbr = "Mov";
+    const string kMovAbbr = "MOV";
     const string kJmpName = "Jump";
     const string kJmpAbbr = "JMP";
+    const string kNameName = "Name";
+    const string kNameAbbr = "myName";
 }
 
 class Unit;
@@ -28,6 +30,7 @@ class Stat;
 class Panel;
 class Board;
 class Job;
+
 /*
 typedef shared_ptr<Unit> UnitPtr;
 typedef shared_ptr<Stat> StatPtr;

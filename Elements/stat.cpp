@@ -1,18 +1,18 @@
 #include "stat.h"
 
-int Stat::getDefaultValue() const
+int Stat::getDefaultNumber() const
 {
-    return defaultValue;
+    return defaultNumber;
 }
 bool Stat::operator ==(const Stat &other) const
 {
-    return other.getName() == myName;
+    return other.getId() == id;
 }
-string Stat::getShortName() const
+string Stat::getText() const
 {
-    return shortName;
+    return text;
 }
-string Stat::getName() const
+string Stat::getId() const
 {
-    return myName;
+    return id;
 }

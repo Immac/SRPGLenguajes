@@ -19,22 +19,27 @@ shared_ptr<Unit> Test::newUnit()
     int maxLevel = 12;
 
     const int level = randomInt( minLevel,maxLevel);
-    const int unitId(randomInt(minLevel, 100000));
     const string skillSetName("MySkillSet");
 
     SkillSet skillSet(skillSetName);
-    StatSystem statSystem(unitId);
+    StatSystem statSystem;
     auto job = newJob();
 
     map<shared_ptr<Job>,int> jobList
     {
         {job,level}
     };
+    auto newBaseStats
+    {
+        shared_ptr<Stat>(move(new Stat(kHpName,kHpAbbr,100))),
+        shared_ptr<Stat>(move(new Stat(kAtkName,kAtkAbbr,75))),
+        shared_ptr<Stat>(move(new Stat(kDefName,kDefAbbr,70)))
+    };
     statSystem.levelUps = jobList;
     statSystem.currentJob = job;
     statSystem.baseJob = job;
-    string unitName = "Testo";
-    shared_ptr<Unit> unit(new Unit(unitName,statSystem,skillSet));
+    string unitId = "TestoId";
+    shared_ptr<Unit> unit(new Unit(unitId,statSystem,skillSet));
 
     return unit;
 }
@@ -58,8 +63,8 @@ shared_ptr<Job> Test::newJob()
         shared_ptr<Stat>(move(new Stat(kMovName,kMovAbbr,4))),
         shared_ptr<Stat>(move(new Stat(kJmpName,kJmpAbbr,3))),
     };
-    auto myJob = new Job(string("Tester"),newBaseStats,newGrowthStats,newJobStats);
-    return move(shared_ptr<Job>(move(myJob)));
+    auto newJob = new Job(string("Tester"),newBaseStats,newGrowthStats,newJobStats);
+    return move(shared_ptr<Job>(move(newJob)));
 }
 
 shared_ptr<Stat> Test::newStat(string name, string abbr, int defaultValue)

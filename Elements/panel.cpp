@@ -20,6 +20,12 @@ bool Panel::recieveUnit(shared_ptr<Unit> newUnit)
     return true;
 }
 
+bool Panel::disposeUnit()
+{
+    myUnit.reset();
+    return true;
+}
+
 Point Panel::getPointByOffset(Point offsetPoint)
 {
     Point output= {myLocation.first + offsetPoint.first,
@@ -27,7 +33,7 @@ Point Panel::getPointByOffset(Point offsetPoint)
     return output;
 }
 
-void Panel::fillAdjacentPanelByPosition(Point offsetPoint,
+void Panel::fillAdjacentByPosition(Point offsetPoint,
                                        shared_ptr<Panel> &output,
                                        vector<shared_ptr<Panel> > &input)
 {
@@ -39,9 +45,16 @@ void Panel::fillAdjacentPanelByPosition(Point offsetPoint,
 }
 void Panel::fillAdjacentPanels(vector<shared_ptr<Panel> > &mapPanels)
 {
-    fillAdjacentPanelByPosition(northOffset, northPanel ,mapPanels);
-    fillAdjacentPanelByPosition(soutOffset, southPanel ,mapPanels);
-    fillAdjacentPanelByPosition(eastOffset, eastPanel ,mapPanels);
-    fillAdjacentPanelByPosition(westOffset, westPanel ,mapPanels);
+    fillAdjacentByPosition(northOffset, northPanel ,mapPanels);
+    fillAdjacentByPosition(southOffset, southPanel ,mapPanels);
+    fillAdjacentByPosition(eastOffset, eastPanel ,mapPanels);
+    fillAdjacentByPosition(westOffset, westPanel ,mapPanels);
 }
+shared_ptr<Unit> Panel::getMyUnit() const
+{
+    return myUnit;
+}
+
+
+
 

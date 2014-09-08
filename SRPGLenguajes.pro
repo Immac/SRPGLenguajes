@@ -5,6 +5,7 @@ CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += \
+    Elements/skillset.cpp \
     Elements/panel.cpp \
     Elements/unit.cpp \
     Elements/utilities.cpp \
@@ -15,15 +16,19 @@ SOURCES += \
     Elements/job.cpp \
     Elements/action.cpp \
     Elements/actionattack.cpp \
-    Elements/skillset.cpp \
     Loaders/boardloader.cpp \
     Game/game.cpp \
     Game/player.cpp \
     Elements/unitset.cpp \
     Game/allegiance.cpp \
-    Elements/statsystem.cpp
+    Elements/statsystem.cpp \
+    Elements/actionset.cpp \
+    Elements/actionerror.cpp \
+    XML/loader.cpp \
+    XML/tinyxml2.cpp
 
 HEADERS += \
+    Elements/skillset.h \
     Elements/panel.h \
     Elements/unit.h \
     Elements/utilities.h \
@@ -33,7 +38,6 @@ HEADERS += \
     Elements/job.h \
     Elements/action.h \
     Elements/actionattack.h \
-    Elements/skillset.h \
     Loaders/boardloader.h \
     Game/game.h \
     Game/player.h \
@@ -41,5 +45,9 @@ HEADERS += \
     Game/allegiance.h \
     Expression/exprtk.hpp \
     Tests/catch.hpp \
-    Elements/statsystem.h
+    Elements/statsystem.h \
+    Elements/actionset.h \
+    Elements/actionerror.h \
+    XML/loader.h \
+    XML/tinyxml2.h
 

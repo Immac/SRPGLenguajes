@@ -4,40 +4,42 @@
 
 class Stat
 {
-public:
-    Stat(string statName,string abbr,int defaultValue):
-        myName(statName),shortName(abbr),
-        defaultValue(defaultValue),
-        currentValue(defaultValue)
-        {}
-    void grow(int growthValue)
-        {currentValue = defaultValue += growthValue;}
-    int getDefaultValue() const;
-    string getName() const;
-    bool operator ==(const Stat &other) const;
-    string getShortName() const;
-
 private:
-    string myName;
-    string shortName;
-    int defaultValue;
+    const string defaultString = "N/A";
+    const int nonSetValue = 0;
+public:
+    Stat(string id):Stat(id,defaultString,nonSetValue){}
+    Stat(string id,string defaultText,int defaultNumber):
+        currentNumber(defaultNumber),
+        id(id),text(defaultText),
+        defaultNumber(defaultNumber)
+        {}
+    void grow(int growthNumber)
+        {currentNumber = defaultNumber += growthNumber;}
+    int getDefaultNumber() const;
+    string getId() const;
+    string getText() const;
+    bool operator ==(const Stat &other) const;
 
 public:
-    int currentValue;
-
+    int currentNumber;
+private:
+    string id;
+    string text;
+    int defaultNumber;
 };
 
 class IsStatNamed
 {
 public:
-    IsStatNamed(string name = ""):
-        myName(name){}
-    bool operator ()(shared_ptr<Stat> atkStat)
+    IsStatNamed(string id = ""):
+        id(id){}
+    bool operator ()(shared_ptr<Stat> stat)
     {
-        return atkStat->getName() == myName;
+        return stat->getId() == id;
     }
 private:
-    string myName;
+    string id;
 };
 
 #endif // STAT_H

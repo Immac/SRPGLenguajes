@@ -12,7 +12,10 @@ public:
     friend class IsPanelPosition;
     bool giveMyUnitTo(shared_ptr<Panel> newOwner);
     bool recieveUnit(shared_ptr<Unit> newUnit);
+    bool disposeUnit();
     void fillAdjacentPanels(vector<shared_ptr<Panel> > &mapPanels);
+
+    shared_ptr<Unit> getMyUnit() const;
 
 private:
     Point myLocation;
@@ -23,12 +26,12 @@ private:
     shared_ptr<Panel> westPanel;
 private:
     const Point northOffset = {0,1};
-    const Point soutOffset = {0,-1};
+    const Point southOffset = {0,-1};
     const Point eastOffset = {1,0};
     const Point westOffset = {-1,0};
 private:
     Point getPointByOffset(Point offsetPoint);
-    void fillAdjacentPanelByPosition(Point offsetPoint,
+    void fillAdjacentByPosition(Point offsetPoint,
                                     shared_ptr<Panel> &output,
                                     vector<shared_ptr<Panel> > &input);
 };

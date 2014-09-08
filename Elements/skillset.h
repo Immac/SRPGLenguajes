@@ -1,7 +1,6 @@
 #ifndef SKILLSET_H
 #define SKILLSET_H
-#include "utilities.h"
-#include "action.h"
+#include "actionset.h"
 class SkillSet
 {
 private:
@@ -11,8 +10,9 @@ public:
     SkillSet(string skillSetName = string("Unnamed?")):
         myName(skillSetName)
         {}
-    set<ActionPtr> Actions;
+    ActionSet Actions;
     set<SkillSetPtr> SkillSubset;
+    ActionPtr getAction(string actionName);
     string const getName() {return myName;}
 
 private:

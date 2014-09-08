@@ -1,29 +1,34 @@
 #ifndef UNIT_H
 #define UNIT_H
-#include "statsystem.h"
 #include "skillset.h"
+#include "statsystem.h"
+
 
 class Unit
 {
+private:
+    const string errorHandleName = "Error";
 public:
-    Unit(string unitName,StatSystem statSystem,SkillSet skillSet):
-        myName(unitName),
+    Unit():myId(errorHandleName){}
+    Unit(string unitId,StatSystem statSystem,SkillSet skillSet):
+        myId(unitId),
         mySkillSet(skillSet),
         myStatSystem(statSystem)
         {}
     Unit(const Unit &other) noexcept :
-        myName(other.myName),
+        myId(other.myId),
         mySkillSet(other.mySkillSet),
         myStatSystem(other.myStatSystem)
         {}
     Unit(Unit &&other) noexcept :
-        myName(move(other.myName)),
+        myId(move(other.myId)),
         mySkillSet(move(other.mySkillSet)),
         myStatSystem(move(other.myStatSystem))
         {}
-    string myName;
+    string myId;
     SkillSet mySkillSet;
     StatSystem myStatSystem;
+    bool operator ==(const Unit &other) const;
 };
 
 #endif // UNIT_H

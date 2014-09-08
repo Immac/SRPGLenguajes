@@ -1,11 +1,13 @@
 #ifndef JOB_H
 #define JOB_H
-#include "stat.h"
 #include "skillset.h"
+#include "stat.h"
+
 
 class Job
 {
 public:
+    Job():myName("ERROR"){}
     Job(string name,
         set<shared_ptr<Stat>>baseStats,
         set<shared_ptr<Stat>>growthStats,

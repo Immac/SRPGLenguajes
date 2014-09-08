@@ -6,7 +6,9 @@ class Game: public Allegiance
 {
 public:
     Game();
-    void init();
+    void initialize();
+private:
+
 };
 
 #endif // GAME_H

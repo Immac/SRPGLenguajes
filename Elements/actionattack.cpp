@@ -10,22 +10,22 @@ bool ActionAttack::perform(shared_ptr<Unit> &subject, shared_ptr<Unit> &object, 
                                    IsStatNamed(statName));
         if(enhancerItr == subject->myStatSystem.calculatedStats.end())
             continue;
-        enhanceValue += (*enhancerItr)->currentValue;
-        (*enhancerItr)->currentValue;
+        enhanceValue += (*enhancerItr)->currentNumber;
+        (*enhancerItr)->currentNumber;
     }
     for(auto statName: statsInPlay.effectDetractors)
     {
         auto detractor = (*find_if(object->myStatSystem.calculatedStats.begin(),
                                    subject->myStatSystem.calculatedStats.end(),
                                    IsStatNamed(statName)));
-        detractValue += detractor->currentValue;
+        detractValue += detractor->currentNumber;
     }
     for(auto statName: statsInPlay.affectedStats)
     {
         auto affected = (*find_if(object->myStatSystem.calculatedStats.begin(),
                                   subject->myStatSystem.calculatedStats.end(),
                                   IsStatNamed(statName)));
-        affected->currentValue -= max(enhanceValue-detractValue,1);
+        affected->currentNumber -= max(enhanceValue-detractValue,1);
     }
     //TODO: Clean this
     return true;

@@ -3,3 +3,8 @@
 Game::Game()
 {
 }
+
+void Game::initialize()
+{
+
+}
