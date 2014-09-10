@@ -16,7 +16,6 @@ SOURCES += \
     Elements/job.cpp \
     Elements/action.cpp \
     Elements/actionattack.cpp \
-    Loaders/boardloader.cpp \
     Game/game.cpp \
     Game/player.cpp \
     Elements/unitset.cpp \
@@ -38,7 +37,6 @@ HEADERS += \
     Elements/job.h \
     Elements/action.h \
     Elements/actionattack.h \
-    Loaders/boardloader.h \
     Game/game.h \
     Game/player.h \
     Elements/unitset.h \

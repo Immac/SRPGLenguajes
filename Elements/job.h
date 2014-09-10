@@ -7,7 +7,7 @@
 class Job
 {
 public:
-    Job():myName("ERROR"){}
+    Job(string name = "Unspecified Error"):myName(name){}
     Job(string name,
         set<shared_ptr<Stat>>baseStats,
         set<shared_ptr<Stat>>growthStats,

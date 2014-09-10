@@ -18,7 +18,7 @@ set<StatSystem::StatPtr> StatSystem::jobStats()
     return currentJob->getJobStats();
 }
 
-bool StatSystem::recalculateStats()
+bool StatSystem::computeStats()
 {
     calculatedStats.clear();
     for(StatPtr statItr : baseJob->getBaseStats())

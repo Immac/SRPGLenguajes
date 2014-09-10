@@ -7,9 +7,9 @@
 class Unit
 {
 private:
-    const string errorHandleName = "Error";
+    static constexpr const char* errorHandleName = "Error";
 public:
-    Unit():myId(errorHandleName){}
+    Unit(string id = errorHandleName):myId(id){}
     Unit(string unitId,StatSystem statSystem,SkillSet skillSet):
         myId(unitId),
         mySkillSet(skillSet),

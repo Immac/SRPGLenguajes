@@ -2,9 +2,13 @@
 #include <iostream>
 #include "Tests/catch.hpp"
 #include "Tests/test.h"
+#include "XML/loader.h"
 int main()
 {
-
+    auto warrior = Loader::jobPtrFromFile("Warrior");
+    auto assassin = Loader::jobPtrFromFile("Assassin");
+    auto unit = Loader::unitFromFile("Immac1");
+    return 0;
 }
 //std::shared_ptr<Board> localNewBoard = Test::newBoard();
 //auto attackAction = ActionAttack(std::string("Attack"));

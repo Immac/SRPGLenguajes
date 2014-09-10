@@ -24,7 +24,7 @@ vector<Board::PanelPtr> Board::selectedPanelUnitMoveRange()
     auto unitInPanel = selectedPanel->getMyUnit();
     if(unitInPanel == nullptr)
         return output;
-    unitInPanel->myStatSystem.getUnitProperty(moveStatName);
+    StattPtr stat = unitInPanel->myStatSystem.getUnitProperty(moveStatName);
 
 }
 

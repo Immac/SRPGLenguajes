@@ -7,6 +7,7 @@ class Board
 private:
     typedef shared_ptr<Panel> PanelPtr;
     typedef shared_ptr<Unit> UnitPtr;
+    typedef shared_ptr<Stat> StattPtr;
 public:
     Board(vector<PanelPtr> mapPanels):
         panels(mapPanels)

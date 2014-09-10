@@ -15,14 +15,14 @@ public:
         currentJob(other.currentJob),
         calculatedStats(other.calculatedStats),
         unitProperties(other.unitProperties)
-        {recalculateStats();}
+        {computeStats();}
     StatSystem( StatSystem &&other):
         levelUps(move(other.levelUps)),
         baseJob(move(other.baseJob)),
         currentJob(move(other.currentJob)),
         calculatedStats(move(other.calculatedStats)),
         unitProperties(move(other.unitProperties))
-        {recalculateStats();}
+        {computeStats();}
     StatPtr getUnitProperty(string name);
     map<JobPtr,int> levelUps;
     JobPtr baseJob;
@@ -30,7 +30,7 @@ public:
     set<StatPtr> jobStats();
     set<StatPtr> calculatedStats;
     set<StatPtr> unitProperties;
-    bool recalculateStats();
+    bool computeStats();
 public:
     const string statNotFound = "Not Found";
 private:

@@ -8,9 +8,14 @@ private:
     const string defaultString = "N/A";
     const int nonSetValue = 0;
 public:
-    Stat(string id):Stat(id,defaultString,nonSetValue){}
+    Stat(string id):
+        Stat(id,defaultString,nonSetValue)
+        {}
     Stat(string id,string defaultText,int defaultNumber):
-        currentNumber(defaultNumber),
+        Stat(id,defaultText,defaultNumber,defaultNumber)
+        {}
+    Stat(string id,string defaultText,int defaultNumber,int currentNumber):
+        currentNumber(currentNumber),
         id(id),text(defaultText),
         defaultNumber(defaultNumber)
         {}
