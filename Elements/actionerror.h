@@ -7,8 +7,7 @@ public:
     ActionError(string name):Action(name){}
 public:
     bool perform(UnitPtr &subject,
-                 UnitPtr &object,
-                 ParticipantStats participantStats) override;
+                 UnitPtr &object) override;
 };
 
 #endif // ACTIONERROR_H

@@ -14,15 +14,20 @@ protected:
     typedef shared_ptr<Unit> UnitPtr ;
     typedef shared_ptr<Action> ActionPtr;
 public:
-    Action(string name,string formula = string("") ):
+    Action(string name):actionName(name){}
+    Action(string name,
+           ParticipantStats participantStats,
+           string formula = string("")):
+        participantStats(participantStats),
         actionName(name),
         actionFormula(formula)
         {}
     bool virtual perform(UnitPtr &subject ,
-                         UnitPtr &object,
-                         ParticipantStats participantStats) = 0;
+                         UnitPtr &object) = 0;
     string virtual getActionName() const;
     string virtual getActionFormula() const;
+protected:
+    ParticipantStats participantStats;
 private:
     string actionName;
     string actionFormula;

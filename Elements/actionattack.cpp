@@ -1,18 +1,15 @@
 #include "actionattack.h"
-bool ActionAttack::perform(UnitPtr &subject, UnitPtr &object, ParticipantStats participantStats)
+bool ActionAttack::perform(UnitPtr &subject, UnitPtr &object)
 {
     VariableList variables = getVariables(participantStats.Object,object,"O");
-    auto tempVariable = getVariables(participantStats.Subject,object,"S");
+    auto tempVariable = getVariables(participantStats.Subject,subject,"S");
     variables.insert(variables.end(),tempVariable.begin(),tempVariable.end());
     auto value = computeVariables(variables);
     for(auto statName: participantStats.Affected)
     {
-        auto affected = (*find_if(object->myStatSystem.calculatedStats.begin(),
-                                  subject->myStatSystem.calculatedStats.end(),
-                                  IsStatNamed(statName)));
+        auto affected = object->getStat(statName);
         affected->currentNumber -= value;
     }
-    //TODO: Clean this
     return true;
 }
 
@@ -22,13 +19,12 @@ ActionAttack::VariableList ActionAttack::getVariables(set<string> input,UnitPtr 
     for(auto statName: input)
     {
         pair<string,int> var;
-        auto enhancerItr = find_if(actor->myStatSystem.calculatedStats.begin(),
-                                   actor->myStatSystem.calculatedStats.end(),
-                                   IsStatNamed(statName));
-        if(enhancerItr == actor->myStatSystem.calculatedStats.end())
+        auto stat = actor->getStat(statName);
+        string notFound = StatSystem::statNotFound;
+        if(stat->getId() == notFound)
             continue;
-        var.first = string((*enhancerItr)->getText()) + suffix;
-        var.second = (*enhancerItr)->currentNumber;
+        var.first = stat->getText() + suffix;
+        var.second = stat->currentNumber;
         variables.push_back(var);
     }
     return variables;

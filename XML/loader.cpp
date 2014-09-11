@@ -127,6 +127,83 @@ StatSystem Loader::statSystemFromNode(tinyxml2::XMLElement *root)
     return output;
 }
 
+SkillSet Loader::skillSetPtrFromNode(tinyxml2::XMLElement *root)
+{
+
+    auto current = root->FirstChildElement();
+    auto firstAttr = root->FirstAttribute();
+    string attrName = firstAttr->Name();
+    string skillSetName = firstAttr->Value();
+    SkillSet output(skillSetName);
+    if(attrName != kName)
+        return output;
+    while (current)
+    {
+        string nodeName = current->Name();
+        if(nodeName == kNodeAction)
+        {
+            ActionPtr tempAction = actionFromNode(current);
+            output.Actions.actions.insert(move(tempAction));
+        }
+        else if (nodeName == kNodeStatSystem)
+        {
+            SkillSet tempSkillSet = skillSetPtrFromNode(current);
+            output.SkillSubset.insert(SkillSetPtr( new SkillSet(tempSkillSet) ));
+        }
+        current = current->NextSiblingElement();
+    }
+    return output;
+}
+
+Loader::ActionPtr Loader::actionFromNode(tinyxml2::XMLElement *root)
+{
+   auto attribute = root->FirstAttribute();
+   string formula,id;
+   while(attribute)
+   {
+       string attrName = attribute->Name();
+       if(attrName == kAttributeId)
+            id = attribute->Value();
+       else if (attrName == kFormula)
+            formula = attribute->Value();
+       attribute = attribute->Next();
+   }
+   auto current = root->FirstChildElement() ;
+   set<string> subjectStats,objectStats,affectedStats;
+   while(current)
+   {
+       string nodeName = current->Name();
+       if(nodeName == kNodeSubjectStat)
+           subjectStats = participantStatsFromNode(current);
+       else if (nodeName == kNodeObjectStat)
+           objectStats = participantStatsFromNode(current);
+       else if (nodeName == kNodeAffectedStat)
+           affectedStats = participantStatsFromNode(current);
+        current = current->NextSiblingElement();
+   }
+   ParticipantStats partakingStats
+   {
+       move(subjectStats),move(objectStats),move(affectedStats)
+   };
+    ActionPtr output(new ActionAttack{move(id),
+                                      move(partakingStats),
+                                      move(formula)});
+    return output;
+}
+
+set<string> Loader::participantStatsFromNode(tinyxml2::XMLElement *root)
+{
+    set<string> output;
+    auto current = root->FirstChildElement();
+    while(current)
+    {
+        string statName = current->GetText();
+        output.insert(statName);
+        current = current->NextSiblingElement();
+    }
+    return move(output);
+}
+
 Loader::UnitPtr Loader::unitFromNode(tinyxml2::XMLElement *root)
 {
     UnitPtr output;
@@ -139,7 +216,7 @@ Loader::UnitPtr Loader::unitFromNode(tinyxml2::XMLElement *root)
     auto node = root->FirstChildElement(kNodeStatSystem);
     StatSystem unitStatSystem = statSystemFromNode(node);
     node = root->FirstChildElement(kNodeSkillSet);
-    SkillSet unitSkills;
+    SkillSet unitSkills = skillSetPtrFromNode(node);
     output.reset(new Unit{id,unitStatSystem,unitSkills} );
     return output;
 }

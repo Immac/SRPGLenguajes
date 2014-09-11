@@ -7,6 +7,7 @@
 class Unit
 {
 private:
+    typedef shared_ptr<Stat> StatPtr;
     static constexpr const char* errorHandleName = "Error";
 public:
     Unit(string id = errorHandleName):myId(id){}
@@ -28,6 +29,7 @@ public:
     string myId;
     SkillSet mySkillSet;
     StatSystem myStatSystem;
+    StatPtr getStat(string name);
     bool operator ==(const Unit &other) const;
 };
 

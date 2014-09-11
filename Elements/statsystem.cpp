@@ -2,17 +2,31 @@
 
 StatSystem::StatPtr StatSystem::getUnitProperty(string name)
 {
+    return getStatFrom(name,unitProperties);
+}
 
-    auto statItr = find_if(unitProperties.begin(),
-                           unitProperties.end(),
+StatSystem::StatPtr StatSystem::getStat(string name)
+{
+    auto output = getUnitProperty(name);
+    if (output->getId() != statNotFound)
+        return output;
+    output = getStatFrom(name,calculatedStats);
+    if (output->getId() != statNotFound)
+        return output;
+    output = getStatFrom(name,jobStats());
+    return output;
+}
+StatSystem::StatPtr StatSystem::getStatFrom(string name, set<StatSystem::StatPtr> from)
+{
+    auto statItr = find_if(from.begin(),
+                           from.end(),
                            IsStatNamed(name));
-    if(statItr == unitProperties.end())
+    if(statItr == from.end())
         return shared_ptr<Stat> (new Stat(statNotFound));
 
     shared_ptr<Stat> stat = (*statItr);
     return stat;
 }
-
 set<StatSystem::StatPtr> StatSystem::jobStats()
 {
     return currentJob->getJobStats();
@@ -54,3 +68,5 @@ bool StatSystem::growStats(JobPtr job, int multiplier)
     }
     return true;
 }
+
+

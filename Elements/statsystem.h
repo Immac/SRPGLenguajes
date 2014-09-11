@@ -31,6 +31,7 @@ public:
         unitProperties(move(other.unitProperties))
         {computeStats();}
     StatPtr getUnitProperty(string name);
+    StatPtr getStat(string name);
     map<JobPtr,int> levelUps;
     JobPtr baseJob;
     JobPtr currentJob;
@@ -39,9 +40,10 @@ public:
     set<StatPtr> unitProperties;
     bool computeStats();
 public:
-    const string statNotFound = "Not Found";
+    static constexpr const char * statNotFound = "Not Found";
 private:
     bool growStats(JobPtr job, int multiplier);
+    StatPtr getStatFrom(string name, set<StatPtr> from);
 };
 
 #endif // LEVELUPS_H
