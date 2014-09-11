@@ -11,8 +11,8 @@ private:
 public:
     ActionAttack(string name,ParticipantStats participatingStats,string formula = ""):
         Action(name,participatingStats,formula){}
-    bool perform(UnitPtr &subject, UnitPtr &object) override;
-    VariableList getVariables(set<string> input, UnitPtr &actor, string suffix);
+    bool perform(UnitPtr subject, UnitPtr object) override;
+    VariableList getVariables(set<string> input, UnitPtr actor, string suffix);
     int computeVariables(VariableList variableList);
 
 };

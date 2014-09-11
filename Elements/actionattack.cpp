@@ -1,5 +1,5 @@
 #include "actionattack.h"
-bool ActionAttack::perform(UnitPtr &subject, UnitPtr &object)
+bool ActionAttack::perform(UnitPtr subject, UnitPtr object)
 {
     VariableList variables = getVariables(participantStats.Object,object,"O");
     auto tempVariable = getVariables(participantStats.Subject,subject,"S");
@@ -13,7 +13,7 @@ bool ActionAttack::perform(UnitPtr &subject, UnitPtr &object)
     return true;
 }
 
-ActionAttack::VariableList ActionAttack::getVariables(set<string> input,UnitPtr &actor,string suffix)
+ActionAttack::VariableList ActionAttack::getVariables(set<string> input,UnitPtr actor,string suffix)
 {
     VariableList variables;
     for(auto statName: input)
@@ -42,8 +42,7 @@ int ActionAttack::computeVariables(VariableList variableList)
         value.Add(pair.first,pair.second);
     expression.SetValueList(&value);
     expression.SetFunctionList(&functionList);
-    auto formula = getActionFormula();
-    expression.Parse(formula);
+    expression.Parse(actionFormula);
     auto result = expression.Evaluate();
     return result;
 }

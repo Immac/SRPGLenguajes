@@ -7,7 +7,11 @@ int main()
 {
     auto warrior = Loader::jobPtrFromFile("Warrior");
     auto assassin = Loader::jobPtrFromFile("Assassin");
-    auto unit = Loader::unitFromFile("Immac1");
+    auto unit = Loader::unitFromFile("Immac");
+    auto unit2 = Loader::unitFromFile("Alex");
+
+    auto action = unit->mySkillSet.Actions.getAction("Attack");
+    action->perform(unit,unit2);
     return 0;
 }
 //std::shared_ptr<Board> localNewBoard = Test::newBoard();

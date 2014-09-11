@@ -7,11 +7,12 @@ StatSystem::StatPtr StatSystem::getUnitProperty(string name)
 
 StatSystem::StatPtr StatSystem::getStat(string name)
 {
+    string notfound(statNotFound);
     auto output = getUnitProperty(name);
-    if (output->getId() != statNotFound)
+    if (output->getId() != notfound)
         return output;
     output = getStatFrom(name,calculatedStats);
-    if (output->getId() != statNotFound)
+    if (output->getId() != notfound)
         return output;
     output = getStatFrom(name,jobStats());
     return output;
@@ -22,7 +23,11 @@ StatSystem::StatPtr StatSystem::getStatFrom(string name, set<StatSystem::StatPtr
                            from.end(),
                            IsStatNamed(name));
     if(statItr == from.end())
-        return shared_ptr<Stat> (new Stat(statNotFound));
+    {
+        string notfound(statNotFound);
+        return shared_ptr<Stat> (new Stat(notfound));
+    }
+
 
     shared_ptr<Stat> stat = (*statItr);
     return stat;

@@ -22,13 +22,12 @@ public:
         actionName(name),
         actionFormula(formula)
         {}
-    bool virtual perform(UnitPtr &subject ,
-                         UnitPtr &object) = 0;
+    bool virtual perform(UnitPtr subject ,
+                         UnitPtr object) = 0;
     string virtual getActionName() const;
     string virtual getActionFormula() const;
 protected:
     ParticipantStats participantStats;
-private:
     string actionName;
     string actionFormula;
 };

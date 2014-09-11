@@ -5,11 +5,9 @@
 class Stat
 {
 private:
-    const string defaultString = "N/A";
-    const int nonSetValue = 0;
 public:
     Stat(string id):
-        Stat(id,defaultString,nonSetValue)
+        id(id)
         {}
     Stat(string id,string defaultText,int defaultNumber):
         Stat(id,defaultText,defaultNumber,defaultNumber)

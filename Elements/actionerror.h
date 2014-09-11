@@ -6,8 +6,8 @@ class ActionError :public Action
 public:
     ActionError(string name):Action(name){}
 public:
-    bool perform(UnitPtr &subject,
-                 UnitPtr &object) override;
+    bool perform(UnitPtr subject,
+                 UnitPtr object) override;
 };
 
 #endif // ACTIONERROR_H
