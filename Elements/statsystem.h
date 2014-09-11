@@ -9,6 +9,13 @@ private:
     typedef shared_ptr<Stat> StatPtr;
 public:
     StatSystem() = default;
+    StatSystem(map<JobPtr,int> levelUps,JobPtr baseJob,
+               JobPtr currentJob,set<StatPtr> unitStats):
+        levelUps(levelUps),
+        baseJob(baseJob),
+        currentJob(currentJob),
+        unitProperties(unitStats)
+        {computeStats();}
     StatSystem(const StatSystem &other):
         levelUps(other.levelUps),
         baseJob(other.baseJob),

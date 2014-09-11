@@ -90,15 +90,6 @@ bool Test::instantiationTest()
     return true;
 }
 
-StatLists Test::AtkDefHpInPlay()
-{
-    StatLists output;
-    output.effectEnhancers = {"Attack"};
-    output.effectDetractors = {"Defense"};
-    output.affectedStats = {"Health"};
-    return output;
-}
-
 
 
 shared_ptr<Board> Test::newBoard()

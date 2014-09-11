@@ -14,7 +14,6 @@ public:
     static std::shared_ptr<Panel> newPanel(int x, int y);
     static std::shared_ptr<Board> newBoard();
     static bool instantiationTest();
-    static StatLists AtkDefHpInPlay();
     static int randomInt(int minLevel, int maxLevel);
 private:
 };

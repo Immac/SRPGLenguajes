@@ -1,16 +1,18 @@
 #ifndef ACTION_H
 #define ACTION_H
 #include "utilities.h"
-struct StatLists
+struct ParticipantStats
 {
-    set<string> effectEnhancers;
-    set<string> effectDetractors;
-    set<string> affectedStats;
+    set<string> Subject;
+    set<string> Object;
+    set<string> Affected;
 };
+
 class Action
 {
 protected:
     typedef shared_ptr<Unit> UnitPtr ;
+    typedef shared_ptr<Action> ActionPtr;
 public:
     Action(string name,string formula = string("") ):
         actionName(name),
@@ -18,8 +20,9 @@ public:
         {}
     bool virtual perform(UnitPtr &subject ,
                          UnitPtr &object,
-                         StatLists statsInPlay) = 0;
+                         ParticipantStats participantStats) = 0;
     string virtual getActionName() const;
+    string virtual getActionFormula() const;
 private:
     string actionName;
     string actionFormula;

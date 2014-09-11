@@ -42,10 +42,10 @@ Loader::JobPtr Loader::jobPtrFromNode(tinyxml2::XMLElement *root)
     return output;
 }
 
-set<Loader::StatPtr> Loader::statSetFromNode(tinyxml2::XMLElement *baseNode)
+set<Loader::StatPtr> Loader::statSetFromNode(tinyxml2::XMLElement *root)
 {
     set<StatPtr> output;
-    auto current = baseNode->FirstChildElement(kStat);
+    auto current = root->FirstChildElement(kStat);
     while(current)
     {
         StatPtr newStat = statFromNode(current);
@@ -55,9 +55,9 @@ set<Loader::StatPtr> Loader::statSetFromNode(tinyxml2::XMLElement *baseNode)
     return output;
 }
 
-Loader::StatPtr Loader::statFromNode(tinyxml2::XMLElement *baseNode)
+Loader::StatPtr Loader::statFromNode(tinyxml2::XMLElement *root)
 {
-    auto currentAttr = baseNode->FirstAttribute();
+    auto currentAttr = root->FirstAttribute();
     string id,text;
     int normal,current;
     bool hasCurrent = false;
@@ -98,6 +98,35 @@ Loader::UnitPtr Loader::unitFromFile(string unitId)
     return unitFromNode(xmlDoc.FirstChildElement());
 }
 
+string Loader::textFromNode(string nodeName, tinyxml2::XMLElement *root)
+{
+    auto element = root->FirstChildElement(nodeName.c_str());
+    if(element == nullptr)
+        return kNodeNotFound;
+    string output = element->GetText();
+    return output;
+}
+
+StatSystem Loader::statSystemFromNode(tinyxml2::XMLElement *root)
+{
+    string jobName = textFromNode(kNodeBaseJob, root);
+    JobPtr baseJob = jobPtrFromFile(jobName);
+    jobName = textFromNode(kNodeCurrentJob,root);
+    JobPtr currentJob = jobPtrFromFile(jobName);
+    auto node = root->FirstChildElement(kNodeUnitStats);
+    set<StatPtr> unitStats = statSetFromNode(node);
+    node = root->FirstChildElement(kNodeLevels);
+    map<JobPtr,int> levelMap = levelUpsFromNode(node);
+    StatSystem output
+    {
+            move(levelMap),
+            move(baseJob),
+            move(currentJob),
+            move(unitStats)
+    };
+    return output;
+}
+
 Loader::UnitPtr Loader::unitFromNode(tinyxml2::XMLElement *root)
 {
     UnitPtr output;
@@ -106,27 +135,13 @@ Loader::UnitPtr Loader::unitFromNode(tinyxml2::XMLElement *root)
         output.reset(new Unit(kUnexpectedRoot));
         return output;
     }
-    auto element = root->FirstChildElement(kNodeId);
-    string id = element->GetText();
-    element = root->FirstChildElement(kNodeBaseJob);
-    auto jobName = element->GetText();
-    auto baseJob = jobPtrFromFile(jobName);
-    element = root->FirstChildElement(kNodeCurrentJob);
-    jobName = element->GetText();
-    auto currentJob = jobPtrFromFile(jobName);
-    element = root->FirstChildElement(kNodeUnitStats);
-    set<StatPtr> unitStats = statSetFromNode(element);
-    element = root->FirstChildElement(kNodeLevels);
-    map<JobPtr,int> levelMap = levelUpsFromNode(element);
-    StatSystem unitStatSystem;
-    unitStatSystem.unitProperties = move(unitStats);
-    unitStatSystem.baseJob = move(baseJob);
-    unitStatSystem.currentJob = move(currentJob);
-    unitStatSystem.levelUps = move(levelMap);
-    element = root->FirstChildElement(kNodeSkillSet);
+    string id = textFromNode(kNodeId,root);
+    auto node = root->FirstChildElement(kNodeStatSystem);
+    StatSystem unitStatSystem = statSystemFromNode(node);
+    node = root->FirstChildElement(kNodeSkillSet);
     SkillSet unitSkills;
-    Unit *newUnit = new Unit(id,unitStatSystem,unitSkills);
-
+    output.reset(new Unit{id,unitStatSystem,unitSkills} );
+    return output;
 }
 
 map<Loader::JobPtr, int> Loader::levelUpsFromNode(tinyxml2::XMLElement *root)
@@ -144,8 +159,10 @@ map<Loader::JobPtr, int> Loader::levelUpsFromNode(tinyxml2::XMLElement *root)
                 outputPair.first = jobPtrFromFile(attribute->Value());
             if(attrName == kLevels)
                 outputPair.second = attribute->IntValue();
+            attribute = attribute->Next();
         }
         output.insert(outputPair);
+        current = current->NextSiblingElement();
     }
     return output;
 }

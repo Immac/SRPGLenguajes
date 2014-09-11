@@ -25,7 +25,9 @@ vector<Board::PanelPtr> Board::selectedPanelUnitMoveRange()
     if(unitInPanel == nullptr)
         return output;
     StattPtr stat = unitInPanel->myStatSystem.getUnitProperty(moveStatName);
-
+    //todo
+    vector<PanelPtr> TODO;
+    return TODO;
 }
 
 

@@ -1,7 +1,7 @@
 #include "actionerror.h"
 
 
-bool ActionError::perform(UnitPtr &subject, UnitPtr &object, StatLists statsInPlay)
+bool ActionError::perform(UnitPtr &subject, UnitPtr &object, ParticipantStats participantStats)
 {
     return false;
 }

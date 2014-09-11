@@ -12,15 +12,18 @@ private:
 public:
     Loader();
     static JobPtr jobPtrFromFile(string jobName);
-    static JobPtr jobPtrFromNode(tinyxml2::XMLElement *baseNode);
-    static set<StatPtr> statSetFromNode(tinyxml2::XMLElement *baseNode);
-    static StatPtr statFromNode(tinyxml2::XMLElement *baseNode);
+    static JobPtr jobPtrFromNode(tinyxml2::XMLElement *root);
+    static set<StatPtr> statSetFromNode(tinyxml2::XMLElement *root);
+    static StatPtr statFromNode(tinyxml2::XMLElement *root);
     static UnitPtr unitFromFile(string unitId);
     static UnitPtr unitFromNode(tinyxml2::XMLElement *root);
     static map<JobPtr,int> levelUpsFromNode(tinyxml2::XMLElement *root);
+    static string textFromNode(string nodeName, tinyxml2::XMLElement *root);
+    static StatSystem statSystemFromNode(tinyxml2::XMLElement *root);
 private:
     static bool isNotExpected(tinyxml2::XMLElement *element, string expected);
     static constexpr const char* kUnexpectedRoot = "Unexpected root";
+    static constexpr const char* kNodeNotFound = "Node not found";
     static constexpr const char* kErrorAt= "ERROR at:" ;
 private:
     static constexpr const char* kNodeName = "name";
@@ -33,6 +36,7 @@ private:
     static constexpr const char* kNodeUnitStats = "unitstats";
     static constexpr const char* kNodeLevels = "levels";
     static constexpr const char* kNodeSkillSet = "skillset";
+    static constexpr const char* kNodeStatSystem = "statsystem";
     static constexpr const char* kStat = "stat";
     static constexpr const char* kJob = "job";
     static constexpr const char* kUnit = "unit";

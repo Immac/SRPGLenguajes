@@ -8,7 +8,7 @@ public:
 public:
     bool perform(UnitPtr &subject,
                  UnitPtr &object,
-                 StatLists statsInPlay) override;
+                 ParticipantStats participantStats) override;
 };
 
 #endif // ACTIONERROR_H

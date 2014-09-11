@@ -24,7 +24,14 @@ SOURCES += \
     Elements/actionset.cpp \
     Elements/actionerror.cpp \
     XML/loader.cpp \
-    XML/tinyxml2.cpp
+    XML/tinyxml2.cpp \
+    Expression/except.cpp \
+    Expression/expr.cpp \
+    Expression/func.cpp \
+    Expression/funclist.cpp \
+    Expression/node.cpp \
+    Expression/parser.cpp \
+    Expression/vallist.cpp
 
 HEADERS += \
     Elements/skillset.h \
@@ -41,11 +48,18 @@ HEADERS += \
     Game/player.h \
     Elements/unitset.h \
     Game/allegiance.h \
-    Expression/exprtk.hpp \
     Tests/catch.hpp \
     Elements/statsystem.h \
     Elements/actionset.h \
     Elements/actionerror.h \
     XML/loader.h \
-    XML/tinyxml2.h
+    XML/tinyxml2.h \
+    Expression/defs.h \
+    Expression/except.h \
+    Expression/expr.h \
+    Expression/expreval.h \
+    Expression/funclist.h \
+    Expression/node.h \
+    Expression/parser.h \
+    Expression/vallist.h
 
