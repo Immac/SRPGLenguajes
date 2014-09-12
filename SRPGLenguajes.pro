@@ -4,6 +4,16 @@ CONFIG -= app_bundle
 CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++11
 
+INCLUDEPATH += C:\\SFML2.1\\include
+
+LIBS += C:\\SFML2.1\\lib\\libsfml-system.a\
+C:\\SFML2.1\\lib\\libsfml-window.a\
+C:\\SFML2.1\\lib\\libsfml-graphics.a\
+C:\\SFML2.1\\lib\\libsfml-audio.a\
+C:\\SFML2.1\\lib\\libsfml-network.a\
+
+DEFINES += SFML_STATIC
+
 SOURCES += \
     Elements/skillset.cpp \
     Elements/panel.cpp \
@@ -31,7 +41,8 @@ SOURCES += \
     Expression/funclist.cpp \
     Expression/node.cpp \
     Expression/parser.cpp \
-    Expression/vallist.cpp
+    Expression/vallist.cpp \
+    Console/consolehelper.cpp
 
 HEADERS += \
     Elements/skillset.h \
@@ -61,5 +72,6 @@ HEADERS += \
     Expression/funclist.h \
     Expression/node.h \
     Expression/parser.h \
-    Expression/vallist.h
+    Expression/vallist.h \
+    Console/consolehelper.h
 
