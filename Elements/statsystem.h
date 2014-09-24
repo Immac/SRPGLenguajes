@@ -10,7 +10,7 @@ private:
 public:
     StatSystem() = default;
     StatSystem(map<JobPtr,int> levelUps,JobPtr baseJob,
-               JobPtr currentJob,set<StatPtr> unitStats):
+               JobPtr currentJob,vector<StatPtr> unitStats):
         levelUps(levelUps),
         baseJob(baseJob),
         currentJob(currentJob),
@@ -35,15 +35,15 @@ public:
     map<JobPtr,int> levelUps;
     JobPtr baseJob;
     JobPtr currentJob;
-    set<StatPtr> jobStats();
-    set<StatPtr> calculatedStats;
-    set<StatPtr> unitProperties;
+    vector<StatPtr> jobStats();
+    vector<StatPtr> calculatedStats;
+    vector<StatPtr> unitProperties;
     bool computeStats();
 public:
     static constexpr const char * statNotFound = "Not Found";
 private:
     bool growStats(JobPtr job, int multiplier);
-    StatPtr getStatFrom(string name, set<StatPtr> from);
+    StatPtr getStatFrom(string name, vector<StatPtr> from);
 };
 
 #endif // LEVELUPS_H

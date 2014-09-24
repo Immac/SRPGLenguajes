@@ -5,7 +5,7 @@ Loader::Loader()
 {
 }
 
-Loader::JobPtr Loader::jobPtrFromFile(string name)
+Loader::JobPtr Loader::loadJob(string name)
 {
     const string extension(".jox");
     const string folder("Objects/Jobs/");
@@ -18,10 +18,10 @@ Loader::JobPtr Loader::jobPtrFromFile(string name)
         JobPtr errorJob(new Job(notFound));
         return errorJob;
     }
-    return jobPtrFromNode(xmlDoc.FirstChildElement());
+    return makeJob(xmlDoc.FirstChildElement());
 }
 
-Loader::JobPtr Loader::jobPtrFromNode(tinyxml2::XMLElement *root)
+Loader::JobPtr Loader::makeJob(tinyxml2::XMLElement *root)
 {
     JobPtr output;
     if(isNotExpected(root,kJob))
@@ -31,31 +31,31 @@ Loader::JobPtr Loader::jobPtrFromNode(tinyxml2::XMLElement *root)
     }
     auto currentElement = root->FirstChildElement(kNodeName);
     string jobName = currentElement->GetText();
-    set<StatPtr> baseStats,growthStats,jobStats;
+    vector<StatPtr> baseStats,growthStats,jobStats;
     currentElement = root->FirstChildElement(kNodeBaseStats);
-    baseStats = statSetFromNode(currentElement);
+    baseStats = makeStatSet(currentElement);
     currentElement = root->FirstChildElement(kNodeGrowthStats);
-    growthStats = statSetFromNode(currentElement);
+    growthStats = makeStatSet(currentElement);
     currentElement = root->FirstChildElement(kNodeJobStats);
-    jobStats = statSetFromNode(currentElement);
+    jobStats = makeStatSet(currentElement);
     output.reset(new Job(jobName,baseStats,growthStats,jobStats));
     return output;
 }
 
-set<Loader::StatPtr> Loader::statSetFromNode(tinyxml2::XMLElement *root)
+vector<Loader::StatPtr> Loader::makeStatSet(tinyxml2::XMLElement *root)
 {
-    set<StatPtr> output;
+    vector<StatPtr> output;
     auto current = root->FirstChildElement(kStat);
     while(current)
     {
-        StatPtr newStat = statFromNode(current);
-        output.insert(newStat);
+        StatPtr newStat = makeStat(current);
+        output.push_back(newStat);
         current = current->NextSiblingElement();
     }
     return output;
 }
 
-Loader::StatPtr Loader::statFromNode(tinyxml2::XMLElement *root)
+Loader::StatPtr Loader::makeStat(tinyxml2::XMLElement *root)
 {
     auto currentAttr = root->FirstAttribute();
     string id,text;
@@ -82,7 +82,7 @@ Loader::StatPtr Loader::statFromNode(tinyxml2::XMLElement *root)
     return output;
 }
 
-Loader::UnitPtr Loader::unitFromFile(string unitId)
+Loader::UnitPtr Loader::loadUnit(string unitId)
 {
     const string extension(".unx");
     const string folder("Objects/Units/");
@@ -95,10 +95,10 @@ Loader::UnitPtr Loader::unitFromFile(string unitId)
         UnitPtr errorUnit(new Unit(errorAt));
         return errorUnit;
     }
-    return unitFromNode(xmlDoc.FirstChildElement());
+    return makeUnit(xmlDoc.FirstChildElement());
 }
 
-string Loader::textFromNode(string nodeName, tinyxml2::XMLElement *root)
+string Loader::getText(string nodeName, tinyxml2::XMLElement *root)
 {
     auto element = root->FirstChildElement(nodeName.c_str());
     if(element == nullptr)
@@ -107,16 +107,16 @@ string Loader::textFromNode(string nodeName, tinyxml2::XMLElement *root)
     return output;
 }
 
-StatSystem Loader::statSystemFromNode(tinyxml2::XMLElement *root)
+StatSystem Loader::makeStatSystem(tinyxml2::XMLElement *root)
 {
-    string jobName = textFromNode(kNodeBaseJob, root);
-    JobPtr baseJob = jobPtrFromFile(jobName);
-    jobName = textFromNode(kNodeCurrentJob,root);
-    JobPtr currentJob = jobPtrFromFile(jobName);
+    string jobName = getText(kNodeBaseJob, root);
+    JobPtr baseJob = loadJob(jobName);
+    jobName = getText(kNodeCurrentJob,root);
+    JobPtr currentJob = loadJob(jobName);
     auto node = root->FirstChildElement(kNodeUnitStats);
-    set<StatPtr> unitStats = statSetFromNode(node);
+    vector<StatPtr> unitStats = makeStatSet(node);
     node = root->FirstChildElement(kNodeLevels);
-    map<JobPtr,int> levelMap = levelUpsFromNode(node);
+    map<JobPtr,int> levelMap = makeLevelUps(node);
     StatSystem output
     {
             move(levelMap),
@@ -127,7 +127,7 @@ StatSystem Loader::statSystemFromNode(tinyxml2::XMLElement *root)
     return output;
 }
 
-SkillSet Loader::skillSetPtrFromNode(tinyxml2::XMLElement *root)
+SkillSet Loader::makeSkillSet(tinyxml2::XMLElement *root)
 {
 
     auto current = root->FirstChildElement();
@@ -140,14 +140,14 @@ SkillSet Loader::skillSetPtrFromNode(tinyxml2::XMLElement *root)
     while (current)
     {
         string nodeName = current->Name();
-        if(nodeName == kNodeAction)
+        if(nodeName == kFileAction)
         {
-            ActionPtr tempAction = actionFromNode(current);
+            ActionPtr tempAction = loadAction(current->GetText());
             output.Actions.actions.insert(move(tempAction));
         }
-        else if (nodeName == kNodeStatSystem)
+        else if (nodeName == kNodeSkillSet)
         {
-            SkillSet tempSkillSet = skillSetPtrFromNode(current);
+            SkillSet tempSkillSet = makeSkillSet(current);
             output.SkillSubset.insert(SkillSetPtr( new SkillSet(tempSkillSet) ));
         }
         current = current->NextSiblingElement();
@@ -155,43 +155,67 @@ SkillSet Loader::skillSetPtrFromNode(tinyxml2::XMLElement *root)
     return output;
 }
 
-Loader::ActionPtr Loader::actionFromNode(tinyxml2::XMLElement *root)
+Loader::ActionPtr Loader::makeAction(tinyxml2::XMLElement *root)
 {
-   auto attribute = root->FirstAttribute();
-   string formula,id;
-   while(attribute)
-   {
+    ActionPtr output;
+    auto current = root->FirstChildElement() ;
+
+    if(isNotExpected(root,kNodeAction))
+    {
+       output.reset(new ActionAttack(kUnexpectedRoot));
+       return  output;
+    }
+    auto attribute = current->FirstAttribute();
+    string formula,id;
+    while(attribute)
+    {
        string attrName = attribute->Name();
        if(attrName == kAttributeId)
             id = attribute->Value();
        else if (attrName == kFormula)
             formula = attribute->Value();
        attribute = attribute->Next();
-   }
-   auto current = root->FirstChildElement() ;
-   set<string> subjectStats,objectStats,affectedStats;
-   while(current)
-   {
+    }
+    current = current->FirstChildElement() ;
+    set<string> subjectStats,objectStats,affectedStats;
+    while(current)
+    {
        string nodeName = current->Name();
        if(nodeName == kNodeSubjectStat)
-           subjectStats = participantStatsFromNode(current);
+           subjectStats.insert(current->GetText());
        else if (nodeName == kNodeObjectStat)
-           objectStats = participantStatsFromNode(current);
+           objectStats.insert(current->GetText());
        else if (nodeName == kNodeAffectedStat)
-           affectedStats = participantStatsFromNode(current);
+           affectedStats.insert(current->GetText());
         current = current->NextSiblingElement();
-   }
-   ParticipantStats partakingStats
-   {
+    }
+    ParticipantStats partakingStats
+    {
        move(subjectStats),move(objectStats),move(affectedStats)
-   };
-    ActionPtr output(new ActionAttack{move(id),
+    };
+    output.reset(new ActionAttack{move(id),
                                       move(partakingStats),
                                       move(formula)});
     return output;
 }
 
-set<string> Loader::participantStatsFromNode(tinyxml2::XMLElement *root)
+Loader::ActionPtr Loader::loadAction(string name)
+{
+    const string extension(".acx");
+    const string folder("Objects/Actions/");
+    const string path = folder + name + extension;
+    tiny::XMLDocument xmlDoc;
+    auto error = xmlDoc.LoadFile(path.c_str());
+    if(error != tiny::XML_NO_ERROR)
+    {
+        const string notFound = string(kErrorAt) + name;
+        ActionPtr actionError(new ActionAttack(notFound));
+        return actionError;
+    }
+    return makeAction(xmlDoc.FirstChildElement());
+}
+
+set<string> Loader::makeParticipantStat(tinyxml2::XMLElement *root)
 {
     set<string> output;
     auto current = root->FirstChildElement();
@@ -204,7 +228,7 @@ set<string> Loader::participantStatsFromNode(tinyxml2::XMLElement *root)
     return move(output);
 }
 
-Loader::UnitPtr Loader::unitFromNode(tinyxml2::XMLElement *root)
+Loader::UnitPtr Loader::makeUnit(tinyxml2::XMLElement *root)
 {
     UnitPtr output;
     if(isNotExpected(root,kUnit))
@@ -212,16 +236,16 @@ Loader::UnitPtr Loader::unitFromNode(tinyxml2::XMLElement *root)
         output.reset(new Unit(kUnexpectedRoot));
         return output;
     }
-    string id = textFromNode(kNodeId,root);
+    string id = getText(kNodeId,root);
     auto node = root->FirstChildElement(kNodeStatSystem);
-    StatSystem unitStatSystem = statSystemFromNode(node);
+    StatSystem unitStatSystem = makeStatSystem(node);
     node = root->FirstChildElement(kNodeSkillSet);
-    SkillSet unitSkills = skillSetPtrFromNode(node);
+    SkillSet unitSkills = makeSkillSet(node);
     output.reset(new Unit{id,unitStatSystem,unitSkills} );
     return output;
 }
 
-map<Loader::JobPtr, int> Loader::levelUpsFromNode(tinyxml2::XMLElement *root)
+map<Loader::JobPtr, int> Loader::makeLevelUps(tinyxml2::XMLElement *root)
 {
     auto current = root->FirstChildElement();
     map<JobPtr,int> output;
@@ -233,7 +257,7 @@ map<Loader::JobPtr, int> Loader::levelUpsFromNode(tinyxml2::XMLElement *root)
         {
             string attrName(attribute->Name());
             if(attrName == kJob)
-                outputPair.first = jobPtrFromFile(attribute->Value());
+                outputPair.first = loadJob(attribute->Value());
             if(attrName == kLevels)
                 outputPair.second = attribute->IntValue();
             attribute = attribute->Next();

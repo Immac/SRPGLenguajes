@@ -7,8 +7,7 @@ bool ActionAttack::perform(UnitPtr subject, UnitPtr object)
     auto value = computeVariables(variables);
     for(auto statName: participantStats.Affected)
     {
-        auto affected = object->getStat(statName);
-        affected->currentNumber -= value;
+        object->getStat(statName)->currentNumber -= value;
     }
     return true;
 }

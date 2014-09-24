@@ -4,32 +4,32 @@ ConsoleHelper::ConsoleHelper()
 {
 }
 
-string ConsoleHelper::unitPrint(Unit input)
+string ConsoleHelper::unitPrint(shared_ptr<Unit> input)
 {
     string output;
-    string unitId = input.myId;
+    string unitId = input->myId;
     output.append("Id: "+ unitId);
-    auto name = input.getStat("Name");
+    auto name = input->getStat("Name");
     string unitName = name->getText();
-    vector<StatDisplay> stats = getDisplaysFrom(input.myStatSystem.unitProperties);
-    auto temp = getDisplaysFrom(input.myStatSystem.calculatedStats);
+    string jobName = input->myStatSystem.baseJob->getName();
+    vector<StatDisplay> stats = getDisplaysFrom(input->myStatSystem.unitProperties);
+    auto temp = getDisplaysFrom(input->myStatSystem.calculatedStats);
     stats.insert(stats.end(),temp.begin(),temp.end());
-    temp = getDisplaysFrom(input.myStatSystem.jobStats());
+    temp = getDisplaysFrom(input->myStatSystem.jobStats());
     stats.insert(stats.end(),temp.begin(),temp.end());
     cout << "Unit Id: " << unitId << "\n";
     cout << "Name: " << unitName << "\n";
+    cout << "Job: " << jobName << "\n";
     cout << "Stats: \n";
     for(StatDisplay display:stats)
     {
-        cout << "Name:\t\t" << display.id << "\n";
-        cout << "Text:\t\t" << display.text << "\n";
-        cout << "Current:\t " << to_string(display.currVal) << "\n";
-        cout << "Normal\t\t: " << to_string(display.normVal) << "\n";
+        cout << display.id << ": " << display.text << "\n";
+        cout << to_string(display.currVal) << "/" << to_string(display.normVal) << "\n";
     }
     return output;
 }
 
-vector<StatDisplay> ConsoleHelper::getDisplaysFrom(set<ConsoleHelper::StatPtr> input)
+vector<StatDisplay> ConsoleHelper::getDisplaysFrom(vector<ConsoleHelper::StatPtr> input)
 {
     vector<StatDisplay> output;
     for(StatPtr stat: input)

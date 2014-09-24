@@ -17,8 +17,8 @@ private:
     typedef shared_ptr<Stat> StatPtr;
 public:
     ConsoleHelper();
-    static string unitPrint(Unit input);
-    static vector<StatDisplay> getDisplaysFrom(set<StatPtr> input);
+    static string unitPrint(shared_ptr<Unit> input);
+    static vector<StatDisplay> getDisplaysFrom(vector<StatPtr> input);
 };
 
 #endif // CONSOLEHELPER_H

@@ -6,14 +6,14 @@
 #include "Console/consolehelper.h"
 int main()
 {
-
-    auto warrior = Loader::jobPtrFromFile("Warrior");
-    auto assassin = Loader::jobPtrFromFile("Assassin");
-    auto unit = Loader::unitFromFile("Immac");
-    auto unit2 = Loader::unitFromFile("Alex");
+    string name;
+    cout << "Nombre de la unidad: ";
+    cin >> name;
+    auto unit = Loader::loadUnit(name);
+    auto unit2 = Loader::loadUnit(name);
 
     auto action = unit->mySkillSet.Actions.getAction("Attack");
     action->perform(unit,unit2);
-    ConsoleHelper::unitPrint(*unit);
+    ConsoleHelper::unitPrint(unit2);
     return 0;
 }

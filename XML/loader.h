@@ -13,18 +13,19 @@ private:
     typedef shared_ptr<SkillSet> SkillSetPtr;
 public:
     Loader();
-    static JobPtr jobPtrFromFile(string jobName);
-    static JobPtr jobPtrFromNode(tinyxml2::XMLElement *root);
-    static set<StatPtr> statSetFromNode(tinyxml2::XMLElement *root);
-    static StatPtr statFromNode(tinyxml2::XMLElement *root);
-    static set<string> participantStatsFromNode(tinyxml2::XMLElement *root);
-    static UnitPtr unitFromFile(string unitId);
-    static UnitPtr unitFromNode(tinyxml2::XMLElement *root);
-    static map<JobPtr,int> levelUpsFromNode(tinyxml2::XMLElement *root);
-    static string textFromNode(string nodeName, tinyxml2::XMLElement *root);
-    static StatSystem statSystemFromNode(tinyxml2::XMLElement *root);
-    static SkillSet skillSetPtrFromNode(tinyxml2::XMLElement *root);
-    static ActionPtr actionFromNode(tinyxml2::XMLElement *root);
+    static JobPtr loadJob(string jobName);
+    static JobPtr makeJob(tinyxml2::XMLElement *root);
+    static vector<StatPtr> makeStatSet(tinyxml2::XMLElement *root);
+    static StatPtr makeStat(tinyxml2::XMLElement *root);
+    static set<string> makeParticipantStat(tinyxml2::XMLElement *root);
+    static UnitPtr loadUnit(string unitId);
+    static UnitPtr makeUnit(tinyxml2::XMLElement *root);
+    static map<JobPtr,int> makeLevelUps(tinyxml2::XMLElement *root);
+    static string getText(string nodeName, tinyxml2::XMLElement *root);
+    static StatSystem makeStatSystem(tinyxml2::XMLElement *root);
+    static SkillSet makeSkillSet(tinyxml2::XMLElement *root);
+    static ActionPtr makeAction(tinyxml2::XMLElement *root);
+    static ActionPtr loadAction(string name);
 
 private:
     static bool isNotExpected(tinyxml2::XMLElement *element, string expected);
@@ -43,10 +44,11 @@ private:
     static constexpr const char* kNodeLevels = "levels";
     static constexpr const char* kNodeSkillSet = "skillset";
     static constexpr const char* kNodeStatSystem = "statsystem";
-    static constexpr const char* kNodeAction = "action";
-    static constexpr const char* kNodeSubjectStat = "subjectstat";
-    static constexpr const char* kNodeObjectStat = "objectstat";
-    static constexpr const char* kNodeAffectedStat = "affectedstat";
+    static constexpr const char* kFileAction = "action_file";
+    static constexpr const char* kNodeSubjectStat = "subject_stat";
+    static constexpr const char* kNodeObjectStat = "object_stat";
+    static constexpr const char* kNodeAffectedStat = "affected_stat";
+    static constexpr const char* kNodeAction = "actions";
     static constexpr const char* kStat = "stat";
     static constexpr const char* kJob = "job";
     static constexpr const char* kUnit = "unit";
