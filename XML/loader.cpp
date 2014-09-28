@@ -148,7 +148,7 @@ SkillSet Loader::makeSkillSet(tinyxml2::XMLElement *root)
         else if (nodeName == kNodeSkillSet)
         {
             SkillSet tempSkillSet = makeSkillSet(current);
-            output.SkillSubset.insert(SkillSetPtr( new SkillSet(tempSkillSet) ));
+            output.SkillSubsets.insert(SkillSetPtr( new SkillSet(tempSkillSet) ));
         }
         current = current->NextSiblingElement();
     }

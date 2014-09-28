@@ -11,8 +11,9 @@ public:
         myName(skillSetName)
         {}
     ActionSet Actions;
-    set<SkillSetPtr> SkillSubset;
+    set<SkillSetPtr> SkillSubsets;
     ActionPtr getAction(string actionName);
+    SkillSetPtr getSubset(string subsetName);
     string const getName() {return myName;}
 
 private:

@@ -32,4 +32,16 @@ protected:
     string actionFormula;
 };
 
+class IsActionNamed
+{
+public:
+    IsActionNamed(string id = ""):id(id){}
+    bool operator ()(shared_ptr<Action> action)
+    {
+        return action->getActionName() == id;
+    }
+private:
+    string id;
+};
+
 #endif // ACTION_H

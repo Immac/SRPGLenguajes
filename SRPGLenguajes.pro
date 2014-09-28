@@ -22,7 +22,6 @@ SOURCES += \
     main.cpp \
     Elements/board.cpp \
     Elements/stat.cpp \
-    Tests/test.cpp \
     Elements/job.cpp \
     Elements/action.cpp \
     Elements/actionattack.cpp \
@@ -42,7 +41,8 @@ SOURCES += \
     Expression/node.cpp \
     Expression/parser.cpp \
     Expression/vallist.cpp \
-    Console/consolehelper.cpp
+    Console/consolehelper.cpp \
+    DemoComponents/demounit.cpp
 
 HEADERS += \
     Elements/skillset.h \
@@ -51,7 +51,6 @@ HEADERS += \
     Elements/utilities.h \
     Elements/board.h \
     Elements/stat.h \
-    Tests/test.h \
     Elements/job.h \
     Elements/action.h \
     Elements/actionattack.h \
@@ -73,5 +72,6 @@ HEADERS += \
     Expression/node.h \
     Expression/parser.h \
     Expression/vallist.h \
-    Console/consolehelper.h
+    Console/consolehelper.h \
+    DemoComponents/demounit.h
 
