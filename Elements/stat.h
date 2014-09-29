@@ -23,7 +23,6 @@ public:
     string getId() const;
     string getText() const;
     bool operator ==(const Stat &other) const;
-
 public:
     int currentNumber;
 private:

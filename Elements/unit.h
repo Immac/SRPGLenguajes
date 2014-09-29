@@ -8,24 +8,12 @@ class Unit
 {
 private:
     typedef shared_ptr<Stat> StatPtr;
-    static constexpr const char* errorHandleName = "Error";
+    static constexpr const char* errorHandleName = "Undefined Error";
 public:
     Unit(string id = errorHandleName):myId(id){}
-    Unit(string unitId,StatSystem statSystem,SkillSet skillSet):
-        myId(unitId),
-        mySkillSet(skillSet),
-        myStatSystem(statSystem)
-        {}
-    Unit(const Unit &other) noexcept :
-        myId(other.myId),
-        mySkillSet(other.mySkillSet),
-        myStatSystem(other.myStatSystem)
-        {}
-    Unit(Unit &&other) noexcept :
-        myId(move(other.myId)),
-        mySkillSet(move(other.mySkillSet)),
-        myStatSystem(move(other.myStatSystem))
-        {}
+    Unit(string unitId,StatSystem statSystem,SkillSet skillSet);
+    Unit(const Unit &other) noexcept;
+    Unit(Unit &&other) noexcept;
     string myId;
     SkillSet mySkillSet;
     StatSystem myStatSystem;
