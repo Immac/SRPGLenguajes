@@ -16,7 +16,7 @@ public:
         vector<shared_ptr<Stat>>jobStats
         );
     string getName() {return myName;} const
-    vector<StatPtr> getBaseStats() const;
+    vector<StatPtr> getBaseStats();
     vector<StatPtr> getGrowthStats() const;
     vector<StatPtr > getJobStats() const;
 private:

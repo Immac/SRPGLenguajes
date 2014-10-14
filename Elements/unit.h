@@ -12,8 +12,8 @@ private:
 public:
     Unit(string id = errorHandleName):myId(id){}
     Unit(string unitId,StatSystem statSystem,SkillSet skillSet);
-    Unit(const Unit &other) noexcept;
-    Unit(Unit &&other) noexcept;
+    Unit(const Unit &other);
+    Unit(Unit &&other);
     string myId;
     SkillSet mySkillSet;
     StatSystem myStatSystem;
