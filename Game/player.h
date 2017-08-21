@@ -12,6 +12,7 @@ public:
     int currency;
     //set<Currency> currency;
     //set<Items> myItems;
+//juegos
 };
 
 #endif // PLAYER_H
