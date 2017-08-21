@@ -7,7 +7,7 @@
 #include "SFML/Graphics.hpp"
 #include "thread"
 #include "DemoComponents/demounit.h"
-/*
+/*   
 void prepare(){
 string name;
 cout << "Unit's Name? : ";
