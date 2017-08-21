@@ -38,6 +38,7 @@ void update(DemoUnit &subject,DemoUnit &object)
 
 int main()
 {
+    cout << "Hello, world!" << endl;
     DemoUnit mario(Loader::loadUnit("Mario"));
     DemoUnit luigi(Loader::loadUnit("Luigi"));
     sf::RenderWindow window(sf::VideoMode(800, 600), "Demo 1");
