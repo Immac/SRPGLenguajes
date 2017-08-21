@@ -11,7 +11,7 @@ public:
     set<shared_ptr<Unit>> myUnits;
     int currency;
     //set<Currency> currency;
-    //set<Items> myItems;
+    //set<Items> myItems; //cosas
 };
 
 #endif // PLAYER_H

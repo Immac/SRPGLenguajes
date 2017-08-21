@@ -33,7 +33,7 @@ void update(DemoUnit &subject,DemoUnit &object)
     ConsoleHelper::unitPrint(object.unit);
     subject.sprite.move(subject.speed,0);
     object.sprite.move(object.speed,0);
-    return;
+    return;//hola
 }
 
 int main()
